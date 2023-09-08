@@ -16,35 +16,35 @@ type Resume = {
 }
 const resume: Resume[] = [
   {
-    company: '深圳市佐玩信息技术有限公司',
-    title: '创始人 CEO',
+    company: '5km studio',
+    title: '一个人的 CEO',
     logo: zolplayLogo,
-    start: '2021',
+    start: '2023',
     end: {
       label: '至今',
       dateTime: new Date().getFullYear(),
     },
   },
   {
-    company: 'very very spaceship',
-    title: '软件工程师',
+    company: 'ZHY（智洋创新）',
+    title: ' AI 软件工程师 & 产品经理',
     logo: vvsLogo,
-    start: '2018',
-    end: '2020',
+    start: '2019',
+    end: '2023',
   },
   {
-    company: '8ninths Inc.',
-    title: 'AR & 全栈工程师',
+    company: '十里工作室',
+    title: '自由职业者',
     logo: eightNinthsLogo,
     start: '2017',
     end: '2018',
   },
   {
-    company: 'Abletive',
-    title: '创始人',
+    company: 'Topscomm（青岛鼎信通讯）',
+    title: '嵌入式开发工程师',
     logo: abletiveLogo,
-    start: '2014',
-    end: '2016',
+    start: '2015',
+    end: '2018',
   },
 ]
 

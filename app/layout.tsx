@@ -14,11 +14,11 @@ import { seo } from '~/lib/seo'
 export const metadata: Metadata = {
   metadataBase: seo.url,
   title: {
-    template: '%s | Cali Castle',
+    template: '%s | 5km',
     default: seo.title,
   },
   description: seo.description,
-  keywords: 'Cali,Cali Castle,郭晓楠,佐玩,创始人,CEO,开发者,设计师,细节控,创新',
+  keywords: '5km,okooo5km,smslit,十里,田野,开发者,设计师,细节控,创新,探索,独立创客',
   themeColor: [
     { media: '(prefers-color-scheme: dark)', color: '#000212' },
     { media: '(prefers-color-scheme: light)', color: '#fafafa' },
@@ -38,17 +38,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: {
       default: seo.title,
-      template: '%s | Cali Castle',
+      template: '%s | 5km',
     },
     description: seo.description,
-    siteName: 'Cali Castle',
+    siteName: '5km studio',
     locale: 'zh_CN',
     type: 'website',
-    url: 'https://cali.so',
+    url: 'https://5km.studio',
   },
   twitter: {
-    site: '@thecalicastle',
-    creator: '@thecalicastle',
+    site: '@okooo5km',
+    creator: '@okooo5km',
     card: 'summary_large_image',
     title: seo.title,
     description: seo.description,

@@ -1,10 +1,10 @@
 export const seo = {
-  title: 'Cali Castle | 开发者、设计师、细节控、创始人',
+  title: '5km • Indie Maker',
   description:
-    '我叫 Cali，一名开发者，设计师，细节控，同时也是佐玩创始人，目前带领着佐玩致力于创造一个充满创造力的工作环境，同时鼓励团队创造影响世界的产品。',
+    '我叫 5km，一名独立创客，设计、开发都会一点，有亿点点细节控，兴趣比较多，喜欢折腾。目前致力于极简主义创业，希望能在互联网输送和吸收能量，持续输出优秀产品！',
   url: new URL(
     process.env.NODE_ENV === 'production'
-      ? 'https://cali.so'
+      ? 'https://5km.studio'
       : 'http://localhost:3000'
   ),
 } as const
