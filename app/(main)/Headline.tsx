@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Balancer from 'react-wrap-balancer'
 
-import { CometIcon, BulbIcon, HammerIcon } from '~/assets'
+import { BulbIcon, CometIcon, HammerIcon } from '~/assets'
 import { SocialLink } from '~/components/links/SocialLink'
 
 function Developer() {
@@ -33,7 +33,7 @@ function Designer() {
 function OCD() {
   return (
     <span className="group">
-      <CometIcon className="mr-1 inline-flex transform-gpu transition-transform duration-500 group-hover:rotate-180" />
+      <CometIcon className="mr-2 inline-flex transform-gpu transition-transform duration-500 group-hover:rotate-180" />
       <span>细节捕手</span>
     </span>
   )
@@ -62,9 +62,10 @@ export function Headline() {
           duration: 0.3,
         }}
       >
-        <Developer />，<Designer />，
-        <br />
-        <OCD />，<Founder />
+        <Developer />• <Designer />
+        <div className="mt-4">
+          <OCD /> • <Founder />
+        </div>
       </motion.h1>
       <motion.p
         className="mt-6 text-base text-zinc-600 dark:text-zinc-400"
@@ -79,7 +80,7 @@ export function Headline() {
         }}
       >
         <Balancer>
-          🔖 <b>Hi，我是5km！</b>自称独立创客，在探寻极简创业之道，致力于持续创造出优秀作品，目前专注于桌面应用开发。我对开发（软件或硬件）和设计怀有热爱🔥，喜欢创新和探索新事物，期盼与大家有深度的交流📮。
+          🔖 <b>Hi，我是5km！</b>自称独立创客，在探寻极简创业之道，致力于持续创造出优秀作品，目前专注于桌面应用开发。我热爱开发（软件或硬件）和设计🔥，喜欢创新和探索新事物，期待与大家有深度的交流📮。
         </Balancer>
       </motion.p>
       <motion.div

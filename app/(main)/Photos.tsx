@@ -6,10 +6,10 @@ import React from 'react'
 
 import image1 from '~/assets/highlights/highlight-biketour.jpeg'
 import image2 from '~/assets/highlights/highlight-car.jpeg'
+import image6 from '~/assets/highlights/highlight-denote.jpeg'
 import image3 from '~/assets/highlights/highlight-gift.jpeg'
 import image4 from '~/assets/highlights/highlight-house.jpeg'
 import image5 from '~/assets/highlights/highlight-wedding.jpeg'
-import image6 from '~/assets/highlights/highlight-denote.jpeg'
 
 const images = [image1, image2, image3, image4, image5, image6]
 const alts = [
@@ -63,7 +63,7 @@ export function Photos() {
             animate={{
               width,
               opacity: isCompact ? 1 : 0.85,
-              filter: isCompact ? 'grayscale(0)' : 'grayscale(0.5)',
+              filter: isCompact ? 'grayscale(0)' : 'grayscale(0.2)',
               rotate: idx % 2 === 0 ? 2 : -1,
             }}
             whileHover={
