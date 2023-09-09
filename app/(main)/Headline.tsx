@@ -3,14 +3,14 @@
 import { motion } from 'framer-motion'
 import Balancer from 'react-wrap-balancer'
 
-import { BulbIcon, CometIcon, HammerIcon } from '~/assets'
+import { BulbIcon, CometIcon, DesignerIcon, HammerIcon } from '~/assets'
 import { SocialLink } from '~/components/links/SocialLink'
 
 function Developer() {
   return (
     <span className="group">
       <HammerIcon className="mr-1 inline-flex transform-gpu transition-transform duration-500 group-hover:rotate-180" />
-      产品工匠
+      产品匠
       <span className="invisible inline-flex text-zinc-300 before:content-['|'] group-hover:visible group-hover:animate-typing dark:text-zinc-500" />
     </span>
   )
@@ -25,7 +25,10 @@ function Designer() {
         <span className="absolute -bottom-0.5 -left-0.5 h-1.5 w-1.5 border border-lime-700 bg-zinc-50 dark:border-lime-400" />
         <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 border border-lime-700 bg-zinc-50 dark:border-lime-400" />
       </span>
-      设计热徒
+      <span className="group">
+        <DesignerIcon className="ml-1 mr-2 inline-flex transform-gpu transition-transform duration-500 group-hover:rotate-180" />
+        <span className='ml-1 mr-4'>设计师</span>
+      </span>
     </span>
   )
 }
@@ -34,7 +37,7 @@ function OCD() {
   return (
     <span className="group">
       <CometIcon className="mr-2 inline-flex transform-gpu transition-transform duration-500 group-hover:rotate-180" />
-      <span>细节捕手</span>
+      <span>细节控</span>
     </span>
   )
 }
@@ -80,7 +83,7 @@ export function Headline() {
         }}
       >
         <Balancer>
-          🔖 <b>Hi，我是5km！</b>自称独立创客，在探寻极简创业之道，致力于持续创造出优秀作品，目前专注于桌面应用开发。我热爱开发（软件或硬件）和设计🔥，喜欢创新和探索新事物，期待与大家有深度的交流📮。
+          🔖 <b>Hi，我是5km！</b>自认为是独立创客，在探寻极简创业之道，致力于持续创造出优秀作品，目前专注于桌面应用开发。我热爱开发（软件或硬件）和设计🔥，喜欢创新和探索新事物，期待与大家有深度的交流📮。
         </Balancer>
       </motion.p>
       <motion.div
@@ -105,27 +108,27 @@ export function Headline() {
           aria-label="我的 GitHub"
           platform="github"
         />
-        {/* <SocialLink
-          href="\/tg"
+        <SocialLink
+          href="/tg"
           aria-label="我的 Telegram"
           platform="telegram"
-        /> */}
-        <SocialLink href="/feed.xml" platform="rss" aria-label="RSS 订阅" />
-        <SocialLink
-          href="mailto:5km@smslit.cn"
-          aria-label="我的邮箱"
-          platform="mail"
         />
         <SocialLink
           href="/bilibili"
           aria-label="我的 Bilibili"
           platform="bilibili"
         />
-        {/* <SocialLink
+        <SocialLink
           href="/youtube"
           aria-label="我的 YouTube"
           platform="youtube"
-        /> */}
+        />
+        <SocialLink
+          href="mailto:5km@smslit.cn"
+          aria-label="我的邮箱"
+          platform="mail"
+        />
+        <SocialLink href="/feed.xml" platform="rss" aria-label="RSS 订阅" />
       </motion.div>
     </div>
   )

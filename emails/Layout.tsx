@@ -50,7 +50,7 @@ export default function Layout({
                   <strong>5km</strong>
                 </Link>
                 <br />
-                产品工匠、设计热徒、细节捕手、独立创客
+                产品匠、设计师、细节控、独立创客
               </Text>
               <Text className="text-center">
                 <Link
@@ -60,13 +60,13 @@ export default function Layout({
                   Twitter
                 </Link>{' '}
                 |&nbsp;
-                {/* <Link
+                <Link
                   href="/youtube"
                   className="text-xs text-zinc-600 underline"
                 >
                   YouTube
                 </Link>{' '}
-                |&nbsp; */}
+                |&nbsp;
                 <Link
                   href="/github"
                   className="text-xs text-zinc-600 underline"

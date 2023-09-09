@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     default: seo.title,
   },
   description: seo.description,
-  keywords: '5km,okooo5km,smslit,十里,田野,开发者,设计师,细节控,创新,探索,独立创客',
+  keywords: '5km,okooo5km,smslit,十里,田野,开发者,产品匠,设计师,细节控,创新,探索,独立创客',
   themeColor: [
     { media: '(prefers-color-scheme: dark)', color: '#000212' },
     { media: '(prefers-color-scheme: light)', color: '#fafafa' },
