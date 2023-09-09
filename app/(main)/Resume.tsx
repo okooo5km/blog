@@ -2,10 +2,10 @@ import Image, { type StaticImageData } from 'next/image'
 import React from 'react'
 
 import { BriefcaseIcon } from '~/assets'
-import eightNinthsLogo from '~/assets/company/8ninths.jpeg'
-import abletiveLogo from '~/assets/company/abletive.png'
-import vvsLogo from '~/assets/company/vvs.png'
-import zolplayLogo from '~/assets/company/zolplay.png'
+import zhyLogo from '~/assets/company/zhy.png'
+import topscommLogo from '~/assets/company/topscomm.png'
+import _5kmstudioLogo from '~/assets/company/5kmstudio.png'
+import smslitLogo from '~/assets/company/smslit.png'
 
 type Resume = {
   company: string
@@ -16,9 +16,9 @@ type Resume = {
 }
 const resume: Resume[] = [
   {
-    company: '5km studio',
-    title: '一个人的 CEO',
-    logo: zolplayLogo,
+    company: '5km studio(十里工作室)',
+    title: '独立创客',
+    logo: _5kmstudioLogo,
     start: '2023',
     end: {
       label: '至今',
@@ -26,23 +26,23 @@ const resume: Resume[] = [
     },
   },
   {
-    company: 'ZHY（智洋创新）',
+    company: 'ZHY(智洋创新)',
     title: ' AI 软件工程师 & 产品经理',
-    logo: vvsLogo,
+    logo: zhyLogo,
     start: '2019',
     end: '2023',
   },
   {
-    company: '十里工作室',
-    title: '自由职业者',
-    logo: eightNinthsLogo,
-    start: '2017',
-    end: '2018',
+    company: 'SMSLIT(水木十里 IT)',
+    title: 'Web 开发工程师',
+    logo: smslitLogo,
+    start: '2018',
+    end: '2019',
   },
   {
-    company: 'Topscomm（青岛鼎信通讯）',
+    company: 'Topscomm(青岛鼎信通讯)',
     title: '嵌入式开发工程师',
-    logo: abletiveLogo,
+    logo: topscommLogo,
     start: '2015',
     end: '2018',
   },

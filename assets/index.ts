@@ -45,3 +45,7 @@ export { UTurnLeftIcon } from './icons/UTurnLeftIcon'
 export { XIcon } from './icons/XIcon'
 export { XSquareIcon } from './icons/XSquareIcon'
 export { YouTubeIcon } from './icons/YouTubeIcon'
+
+export { HammerIcon } from './icons/HammerIcon'
+export { CometIcon } from './icons/CometIcon'
+export { BulbIcon } from './icons/BulbIcon'

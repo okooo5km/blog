@@ -1,7 +1,7 @@
 export function url(path = '') {
   const baseUrl =
     process.env.NODE_ENV === 'production'
-      ? 'https://cali.so'
+      ? 'https://5km.studio'
       : 'http://localhost:3000'
 
   return new URL(path, baseUrl)

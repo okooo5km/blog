@@ -50,7 +50,7 @@ export default function Layout({
                   <strong>5km</strong>
                 </Link>
                 <br />
-                产品开发、业余设计、追求细节、独立创客
+                产品工匠、设计热徒、细节捕手、独立创客
               </Text>
               <Text className="text-center">
                 <Link

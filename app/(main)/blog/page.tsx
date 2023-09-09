@@ -6,7 +6,7 @@ import { Container } from '~/components/ui/Container'
 import { BlogPosts } from './BlogPosts'
 
 const description =
-  '个人倾向于通过写文章梳理所学所思，通过这种方式沉淀，分享出来兴许能帮到通道中人！目前文章开发技术方面的偏多，后面我也会适当写一些非技术的话题，比如设计、烹饪、写字、产品管理、生活随笔、感悟等等。希望能在互联网广袤海洋中持续输送和吸收能量！'
+  '我热衷于通过写作分享和整理知识，帮助自我理解，也提供他人参考。虽以技术文章为主，但未来也会探索设计、烹饪、书法、产品等非技术领域。欢迎您在互联网的海洋中，与我一同分享知识，获得启示。'
 export const metadata = {
   title: '我的博客',
   description,
