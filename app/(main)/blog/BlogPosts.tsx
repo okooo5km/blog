@@ -7,10 +7,11 @@ import { BlogPostCard } from './BlogPostCard'
 
 export async function BlogPosts({ limit = 5 }) {
   const posts = await getLatestBlogPosts({ limit, forDisplay: true })
+  console.log(posts)
   const postIdKeys = posts.map(({ _id }) => kvKeys.postViews(_id))
 
   let views: number[] = []
-  if (env.VERCEL_ENV === 'development') {
+  if (env.VERCEL_ENV === 'development' || posts.length === 0) {
     views = posts.map(() => Math.floor(Math.random() * 1000))
   } else {
     views = await redis.mget<number[]>(...postIdKeys)
