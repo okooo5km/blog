@@ -255,7 +255,7 @@ function Root({ className, blockId }: CommentableProps) {
               >
                 <button
                   type="button"
-                  className="group absolute inset-x-0 -top-3 z-50 flex justify-center"
+                  className="group absolute inset-x-0 -top-3 z-50 flex justify-end mr-1 mt-4"
                   onClick={handleToggleCommenting}
                 >
                   <XIcon className="h-6 w-6 rounded-full border border-zinc-400/20 bg-white/95 p-1 text-zinc-500 backdrop-blur transition-all group-hover:w-12 group-hover:text-zinc-700 dark:border-zinc-500/30 dark:bg-zinc-800/95 dark:text-zinc-400 dark:group-hover:text-zinc-200" />

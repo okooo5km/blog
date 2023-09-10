@@ -112,7 +112,7 @@ function ReactIcon({
     return val - bounds.y - bounds.height / 2
   })
 
-  const heightSync = useTransform(distance, [-120, 0, 120], [24, 56, 24])
+  const heightSync = useTransform(distance, [-120, 0, 120], [24, 36, 24])
   const height = useSpring(heightSync, {
     mass: 0.1,
     stiffness: 180,
