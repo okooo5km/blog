@@ -1,5 +1,6 @@
 import Balancer from 'react-wrap-balancer'
 
+import { PeekabooLink } from '~/components/links/PeekabooLink'
 import { SocialLink } from '~/components/links/SocialLink'
 import { Container } from '~/components/ui/Container'
 
@@ -29,8 +30,19 @@ export default function BlogPage() {
         <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
           感谢您的关注
         </h1>
-        <p className="my-6 text-base text-zinc-600 dark:text-zinc-400">
+        <p className="my-4 text-base text-zinc-600 dark:text-zinc-400">
           <Balancer>{description}</Balancer>
+        </p>
+        <p className="my-4">
+          <Balancer>
+              💬 
+            <strong> 新开始，新征途！</strong>
+            过去写的文章都在
+            <PeekabooLink href="https://blog.5km.studio">
+              原博客网站
+            </PeekabooLink>
+            ，也欢迎您去看看！👏
+          </Balancer>
         </p>
         <p className="flex items-center">
           <SocialLink href="/feed.xml" platform="rss" />

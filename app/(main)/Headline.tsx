@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Balancer from 'react-wrap-balancer'
 
 import { BulbIcon, CometIcon, DesignerIcon, HammerIcon } from '~/assets'
+import { PeekabooLink } from '~/components/links/PeekabooLink'
 import { SocialLink } from '~/components/links/SocialLink'
 
 function Developer() {
@@ -124,7 +125,7 @@ export function Headline() {
           platform="youtube"
         />
         <SocialLink
-          href="mailto:5km@smslit.cn"
+          href="mailto:hi@5km.studio"
           aria-label="我的邮箱"
           platform="mail"
         />
