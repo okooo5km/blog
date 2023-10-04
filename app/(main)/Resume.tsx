@@ -16,8 +16,8 @@ type Resume = {
 }
 const resume: Resume[] = [
   {
-    company: '5km studio(十里工作室)',
-    title: '独立创客',
+    company: '5km Software Tech',
+    title: 'CXO',
     logo: _5kmstudioLogo,
     start: '2023',
     end: {
@@ -26,22 +26,22 @@ const resume: Resume[] = [
     },
   },
   {
-    company: 'ZHY(智洋创新)',
-    title: ' AI 软件工程师 & 产品经理',
+    company: 'ZHY',
+    title: 'AI Engineer & AI PM',
     logo: zhyLogo,
     start: '2019',
     end: '2023',
   },
   {
-    company: 'SMSLIT(水木十里 IT)',
-    title: 'Web 开发工程师',
+    company: 'SMSLIT',
+    title: 'Web Developer',
     logo: smslitLogo,
     start: '2018',
     end: '2019',
   },
   {
-    company: 'Topscomm(青岛鼎信通讯)',
-    title: '嵌入式开发工程师',
+    company: 'Topscomm',
+    title: 'Embedded Engineer',
     logo: topscommLogo,
     start: '2015',
     end: '2018',
