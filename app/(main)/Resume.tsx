@@ -2,7 +2,7 @@ import Image, { type StaticImageData } from 'next/image'
 import React from 'react'
 
 import { BriefcaseIcon } from '~/assets'
-import _5kmstudioLogo from '~/assets/company/5kmstudio.png'
+import _5kmtechLogo from '~/assets/company/5kmtech-dbg.png'
 import smslitLogo from '~/assets/company/smslit.png'
 import topscommLogo from '~/assets/company/topscomm.png'
 import zhyLogo from '~/assets/company/zhy.png'
@@ -16,9 +16,9 @@ type Resume = {
 }
 const resume: Resume[] = [
   {
-    company: '5km Software Tech',
+    company: '十里软件科技（济南）有限责任公司',
     title: 'CXO',
-    logo: _5kmstudioLogo,
+    logo: _5kmtechLogo,
     start: '2023',
     end: {
       label: '至今',
@@ -26,22 +26,22 @@ const resume: Resume[] = [
     },
   },
   {
-    company: 'ZHY',
-    title: 'AI Engineer & AI PM',
+    company: '智洋创新科技股份有限公司',
+    title: 'AI 工程师 & AI 产品经理',
     logo: zhyLogo,
     start: '2019',
     end: '2023',
   },
   {
-    company: 'SMSLIT',
-    title: 'Web Developer',
+    company: '水木十里工作室',
+    title: 'Web 全栈开发',
     logo: smslitLogo,
     start: '2018',
     end: '2019',
   },
   {
-    company: 'Topscomm',
-    title: 'Embedded Engineer',
+    company: '青岛鼎信通讯股份有限公司',
+    title: '嵌入式软件工程师',
     logo: topscommLogo,
     start: '2015',
     end: '2018',
