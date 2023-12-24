@@ -6,6 +6,34 @@ import { get } from '@vercel/edge-config'
  */
 !process.env.SKIP_ENV_VALIDATION && (await import('./env.mjs'))
 
+const redirects = [
+  {
+    source: '/twitter',
+    destination: 'https://twitter.com/okooo5km',
+    permanent: true,
+  },
+  {
+    source: '/github',
+    destination: 'https://github.com/okooo5km',
+    permanent: false,
+  },
+  {
+    source: '/bilibili',
+    destination: 'https://space.bilibili.com/376027669',
+    permanent: true,
+  },
+  {
+    source: '/tg',
+    destination: 'https://t.me/okooo5km',
+    permanent: true,
+  },
+  {
+    source: '/youtube',
+    destination: 'https://www.youtube.com/@okooo5km',
+    permanent: true,
+  },
+]
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -16,12 +44,8 @@ const nextConfig = {
     domains: ['cdn.sanity.io'],
   },
 
-  async redirects() {
-    try {
-      return (await get('redirects')) ?? []
-    } catch {
-      return []
-    }
+  redirects() {
+    return redirects
   },
 
   rewrites() {
@@ -41,5 +65,7 @@ const nextConfig = {
     ]
   },
 }
+
+console.log('config: ', nextConfig)
 
 export default nextConfig

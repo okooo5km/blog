@@ -1,5 +1,4 @@
 import { authMiddleware } from '@clerk/nextjs'
-import { get } from '@vercel/edge-config'
 import { type NextRequest, NextResponse } from 'next/server'
 
 import { kvKeys } from '~/config/kv'
@@ -15,7 +14,7 @@ export const config = {
 async function beforeAuthMiddleware(req: NextRequest) {
   const { geo, nextUrl } = req
 
-  const blockedIPs = await get<string[]>('blocked_ips')
+  const blockedIPs: Array<string> = []; 
   const ip = getIP(req)
   const isApi = nextUrl.pathname.startsWith('/api/')
 
