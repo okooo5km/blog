@@ -112,5 +112,10 @@ export default defineType({
         withFilename: true,
       },
     }),
+    defineArrayMember({
+      name: 'table',
+      title: 'table',
+      type: 'table',
+    }),
   ],
 })

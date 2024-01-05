@@ -15,6 +15,7 @@ import {
 } from '~/components/portable-text/PortableTextBlocks'
 import { PortableTextCodeBlock } from '~/components/portable-text/PortableTextCodeBlock'
 import { PortableTextImage } from '~/components/portable-text/PortableTextImage'
+import { PortableTextTable } from '~/components/portable-text/PortableTextTable'
 import { PortableTextTweet } from '~/components/portable-text/PortableTextTweet'
 
 const components: PortableTextComponents = {
@@ -31,6 +32,7 @@ const components: PortableTextComponents = {
     image: PortableTextImage,
     tweet: PortableTextTweet,
     codeBlock: PortableTextCodeBlock,
+    table: PortableTextTable,
   },
 
   marks: {

@@ -3,6 +3,7 @@
  */
 
 import { codeInput } from '@sanity/code-input'
+import { table } from '@sanity/table'
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
@@ -33,5 +34,6 @@ export default defineConfig({
     }),
     media(),
     codeInput(),
+    table(),
   ],
 })
