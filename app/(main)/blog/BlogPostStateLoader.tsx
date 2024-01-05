@@ -23,10 +23,12 @@ export function BlogPostStateLoader({ post }: { post: Post }) {
   }, [post._id])
   React.useEffect(() => {
     // only append new comments
-    comments?.forEach((comment) => {
-      if (blogPostState.comments.find((c) => c.id === comment.id)) return
-      addComment(comment)
-    })
+    if (Array.isArray(comments)) {
+      comments.forEach((comment) => {
+        if (blogPostState.comments.find((c) => c.id === comment.id)) return
+        addComment(comment)
+      })
+    }
   }, [comments])
 
   return null
