@@ -1,24 +1,25 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import React from 'react'
 
-import image1 from '~/assets/highlights/highlight-biketour.jpeg'
-import image2 from '~/assets/highlights/highlight-car.jpeg'
-import image6 from '~/assets/highlights/highlight-denote.jpeg'
-import image3 from '~/assets/highlights/highlight-gift.jpeg'
-import image4 from '~/assets/highlights/highlight-house.jpeg'
-import image5 from '~/assets/highlights/highlight-wedding.jpeg'
-
-const images = [image1, image2, image3, image4, image5, image6]
 const alts = [
-  '从青岛到北京说走就走的骑行之旅',
-  '人生第一辆车直接买了国产的 SUV',
-  '爱人第一次送我玩具礼物是四驱车耶',
-  '千辛万苦终于有了自己的第一套房',
-  '9年义务恋爱画上句号新的课程开启',
-  '优秀的 Robomaster RPS战队值得帮助',
+  '大学说走就走的骑行之旅：青岛-北京',
+  '人生第一辆车直接买了国产的 SUV：小UNI',
+  'INFJ 人格类型的我',
+  '千辛万苦终于有了自己的第一套房：小甜酱',
+  '九年义务恋爱画上句号新的课程开启',
+  '正式独立开发的第一款产品：Zipic',
+]
+
+const images = [
+  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-biketour.webp',
+  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-infj.webp',
+  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-car.webp',
+  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-house.webp',
+  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-wedding.webp',
+  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-zipic.webp',
 ]
 
 export function Photos() {
@@ -56,14 +57,14 @@ export function Photos() {
       }}
     >
       <div className="-my-4 flex w-full snap-x snap-proximity scroll-pl-4 justify-start gap-4 overflow-x-auto px-4 py-4 sm:gap-6 md:justify-center md:overflow-x-hidden md:px-0">
-        {images.map((image, idx) => (
+        {images.map((url, idx) => (
           <motion.div
-            key={image.src}
+            key={url}
             className="relative h-40 flex-none shrink-0 snap-start overflow-hidden rounded-xl bg-zinc-100 ring-2 ring-lime-800/20 dark:bg-zinc-800 dark:ring-lime-300/10 md:h-72 md:rounded-3xl"
             animate={{
               width,
-              opacity: isCompact ? 1 : 0.85,
-              filter: isCompact ? 'grayscale(0)' : 'grayscale(0.2)',
+              opacity: isCompact ? 1.0 : 0.9,
+              filter: isCompact ? 'grayscale(0)' : 'grayscale(0.15)',
               rotate: idx % 2 === 0 ? 2 : -1,
             }}
             whileHover={
@@ -77,13 +78,7 @@ export function Photos() {
             }
             layout
           >
-            <Image
-              src={image}
-              alt={alts[idx] ?? ''}
-              sizes="(min-width: 640px) 18rem, 11rem"
-              className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
-              priority
-            />
+            <img src={url} alt={alts[idx] ?? ''} className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"/>
           </motion.div>
         ))}
       </div>
