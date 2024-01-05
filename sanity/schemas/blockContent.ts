@@ -1,6 +1,7 @@
 import { defineArrayMember, defineType } from 'sanity'
 
 import { Tweet } from '~/sanity/components/Tweet'
+import { VideoPreview } from '~/sanity/components/VideoPreview'
 
 /**
  * This is the schema type for block content used in the post document type
@@ -101,6 +102,32 @@ export default defineType({
       preview: {
         select: {
           id: 'id',
+        },
+      },
+    }),
+    defineArrayMember({
+      type: 'object',
+      name: 'video',
+      title: 'Video',
+      fields: [
+        {
+          name: 'url',
+          type: 'string',
+          title: 'Video Url',
+        },
+        {
+          name: 'title',
+          type: 'string',
+          title: 'Video Title',
+          initialValue: '',
+        },
+      ],
+      components: {
+        preview: VideoPreview as any,
+      },
+      preview: {
+        select: {
+          url: 'url',
         },
       },
     }),
