@@ -31,6 +31,27 @@ export function ImageIcon(props: IconProps = {}) {
   )
 }
 
+export function OtherImageIcon(props: IconProps = {}) {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M15 8H15.01M11.5 21H6C5.20435 21 4.44129 20.6839 3.87868 20.1213C3.31607 19.5587 3 18.7956 3 18V6C3 5.20435 3.31607 4.44129 3.87868 3.87868C4.44129 3.31607 5.20435 3 6 3H18C18.7956 3 19.5587 3.31607 20.1213 3.87868C20.6839 4.44129 21 5.20435 21 6V13M3 16.0001L8 11.0001C8.928 10.1071 10.072 10.1071 11 11.0001L14 14.0001L15 13.0001C15.928 12.1071 17.072 12.1071 18 13.0001M20 21L22 19L20 17M17 17L15 19L17 21"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export function TweetIcon(props: IconProps = {}) {
   return (
     <svg

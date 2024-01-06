@@ -4,10 +4,12 @@ import {
   ImageIcon,
   mathIcon,
   mathInlineIcon,
+  OtherImageIcon,
   TableIcon,
   TweetIcon,
   VideoIcon,
 } from '~/sanity/components/Icons'
+import { OtherImagePreview } from '~/sanity/components/OtherImagePreview'
 import { Tweet } from '~/sanity/components/Tweet'
 import { VideoPreview } from '~/sanity/components/VideoPreview'
 
@@ -141,6 +143,33 @@ export default defineType({
       ],
       components: {
         preview: VideoPreview as any,
+      },
+      preview: {
+        select: {
+          url: 'url',
+        },
+      },
+    }),
+    defineArrayMember({
+      type: 'object',
+      name: 'otherImage',
+      title: 'Web Image',
+      icon: OtherImageIcon,
+      fields: [
+        {
+          name: 'url',
+          type: 'string',
+          title: 'Image Url',
+        },
+        {
+          name: 'label',
+          type: 'string',
+          title: 'Image Label',
+          initialValue: '',
+        },
+      ],
+      components: {
+        preview: OtherImagePreview as any,
       },
       preview: {
         select: {
