@@ -1,5 +1,6 @@
 import { defineArrayMember, defineType } from 'sanity'
 
+import { mathIcon, mathInlineIcon } from '~/sanity/components/MathIcons'
 import { Tweet } from '~/sanity/components/Tweet'
 import { VideoPreview } from '~/sanity/components/VideoPreview'
 
@@ -26,6 +27,7 @@ export default defineType({
       // set corresponds with HTML tags, but you can set any title or value
       // you want, and decide how you want to deal with it where you want to
       // use your content.
+      of: [{ type: 'latex', icon: mathInlineIcon, title: 'Inline math' }],
       styles: [
         { title: 'Normal', value: 'normal' },
         { title: 'H1', value: 'h1' },
@@ -84,6 +86,11 @@ export default defineType({
           title: 'Label',
         },
       ],
+    }),
+    defineArrayMember({
+      type: 'latex',
+      icon: mathIcon,
+      title: 'Math block',
     }),
     defineArrayMember({
       type: 'object',

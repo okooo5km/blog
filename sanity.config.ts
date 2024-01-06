@@ -7,6 +7,7 @@ import { table } from '@sanity/table'
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
+import { latexInput } from 'sanity-plugin-latex-input'
 import { media } from 'sanity-plugin-media'
 
 import { settingsPlugin, settingsStructure } from '~/sanity/plugins/settings'
@@ -35,5 +36,6 @@ export default defineConfig({
     media(),
     codeInput(),
     table(),
+    latexInput(),
   ],
 })

@@ -194,6 +194,9 @@ dependencies:
   sanity:
     specifier: ^3.12.2
     version: 3.12.2(@types/node@18.16.15)(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+  sanity-plugin-latex-input:
+    specifier: ^2.0.4
+    version: 2.0.4(react-dom@18.2.0)(react@18.2.0)(sanity@3.12.2)(styled-components@5.3.11)
   sanity-plugin-media:
     specifier: ^2.0.5
     version: 2.0.5(@sanity/color@2.2.5)(@sanity/icons@2.4.1)(@types/react@18.2.14)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.12.2)(styled-components@5.3.11)
@@ -4221,6 +4224,10 @@ packages:
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
 
+  /@types/katex@0.11.1:
+    resolution: {integrity: sha512-DUlIj2nk0YnJdlWgsFuVKcX27MLW0KbKmGVoUHmFr+74FYYNUDAaj9ZqTADvsbE8rfxuVmSFc7KczYn5Y09ozg==}
+    dev: false
+
   /@types/keygrip@1.0.2:
     resolution: {integrity: sha512-GJhpTepz2udxGexqos8wgaBx4I/zWIDPh/KOGEwAqtuGDkOUJu5eFvwmdBX4AmB8Odsr+9pHCQqiAqDL/yKMKw==}
     dev: false
@@ -5869,6 +5876,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
     dev: false
+    bundledDependencies: false
 
   /crelt@1.0.6:
     resolution: {integrity: sha512-VQ2MBenTq1fWZUH9DJNGti7kKv6EeAuYr3cLwxUWhIu1baTaXh4Ib5W2CqHVqib4/MqbYGJqiL3Zb8GJZr3l4g==}
@@ -8641,6 +8649,13 @@ packages:
       array-includes: 3.1.6
       object.assign: 4.1.4
 
+  /katex@0.11.1:
+    resolution: {integrity: sha512-5oANDICCTX0NqYIyAiFCCwjQ7ERu3DQG2JFHLbYOf+fXaMoH8eg/zOq5WSYJsKMi/QebW+Eh3gSM+oss1H/bww==}
+    hasBin: true
+    dependencies:
+      commander: 2.20.3
+    dev: false
+
   /kind-of@3.2.2:
     resolution: {integrity: sha512-NOW9QQXMoZGg/oqnVNoNTTIFEIid1627WCffUBJEdMxYApq7mNE7CpzucIPc+ZQg25Phej7IJSmX3hO+oblOtQ==}
     engines: {node: '>=0.10.0'}
@@ -11362,6 +11377,25 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       diff-match-patch: 1.0.5
+    dev: false
+
+  /sanity-plugin-latex-input@2.0.4(react-dom@18.2.0)(react@18.2.0)(sanity@3.12.2)(styled-components@5.3.11):
+    resolution: {integrity: sha512-ee9XlSVyeD/Ff30nG0VtRmUudrbPozb9KFlM9B1oSqQyv4q4vodN+F5DeHZ+aUdokSUx1LbJouvkyCMxN8EMUw==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18
+      sanity: ^3.0.0
+      styled-components: ^5.3.5
+    dependencies:
+      '@sanity/incompatible-plugin': 1.0.4(react-dom@18.2.0)(react@18.2.0)
+      '@types/katex': 0.11.1
+      '@types/styled-components': 5.1.26
+      katex: 0.11.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      sanity: 3.12.2(@types/node@18.16.15)(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+      styled-components: 5.3.11(@babel/core@7.22.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
     dev: false
 
   /sanity-plugin-media@2.0.5(@sanity/color@2.2.5)(@sanity/icons@2.4.1)(@types/react@18.2.14)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.12.2)(styled-components@5.3.11):

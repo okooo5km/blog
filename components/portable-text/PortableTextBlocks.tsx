@@ -1,5 +1,6 @@
 import { type PortableTextComponentProps } from '@portabletext/react'
 import React from 'react'
+import { LatexPreview, type LatexPreviewProps } from 'sanity-plugin-latex-input'
 
 import { ClientOnly } from '~/components/ClientOnly'
 import { Commentable } from '~/components/Commentable'
@@ -25,7 +26,34 @@ export function PortableTextBlocksNormal({
           <Commentable blockId={value._key} />
         </ClientOnly>
       )}
-      {children}
+      {value.children.map(
+        (
+          child: PortableTextComponentProps<{
+            _key: string
+            _type: string
+            text?: string
+            body?: string
+          }>
+        ) => {
+          if ('text' in child) {
+            return child.text
+          } else if (
+            '_type' in child &&
+            child._type === 'latex' &&
+            'body' in child
+          ) {
+            if ('body' in child) {
+              const _child: LatexPreviewProps = {
+                body: child.body?.toString() ?? '',
+                layout: 'inline',
+              }
+              return LatexPreview(_child)
+            }
+          }
+
+          return null
+        }
+      )}
     </p>
   )
 }
