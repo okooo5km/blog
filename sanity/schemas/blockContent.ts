@@ -1,6 +1,13 @@
 import { defineArrayMember, defineType } from 'sanity'
 
-import { mathIcon, mathInlineIcon } from '~/sanity/components/MathIcons'
+import {
+  ImageIcon,
+  mathIcon,
+  mathInlineIcon,
+  TableIcon,
+  TweetIcon,
+  VideoIcon,
+} from '~/sanity/components/Icons'
 import { Tweet } from '~/sanity/components/Tweet'
 import { VideoPreview } from '~/sanity/components/VideoPreview'
 
@@ -73,6 +80,7 @@ export default defineType({
     // as a block type.
     defineArrayMember({
       type: 'image',
+      icon: ImageIcon,
       options: { hotspot: true },
       fields: [
         {
@@ -96,6 +104,7 @@ export default defineType({
       type: 'object',
       name: 'tweet',
       title: 'Tweet',
+      icon: TweetIcon,
       fields: [
         {
           name: 'id',
@@ -116,6 +125,7 @@ export default defineType({
       type: 'object',
       name: 'video',
       title: 'Video',
+      icon: VideoIcon,
       fields: [
         {
           name: 'url',
@@ -150,6 +160,7 @@ export default defineType({
       name: 'table',
       title: 'table',
       type: 'table',
+      icon: TableIcon,
     }),
   ],
 })
