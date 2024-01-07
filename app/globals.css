@@ -39,3 +39,8 @@ html.dark {
     opacity: 0;
   }
 }
+
+code {
+  word-break: break-all;
+  word-wrap: break-word;
+}

@@ -36,7 +36,7 @@ export function PortableTextTable({
             <div>
               <motion.div className="relative">
                 <Dialog.Trigger className="w-full">
-                  <table>
+                  <table className="table-fixed break-words">
                     {head && head.cells.filter(Boolean).length > 0 && (
                       <thead>
                         <tr>
