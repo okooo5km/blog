@@ -3,6 +3,7 @@
 import { type PortableTextComponentProps } from '@portabletext/react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { Card } from '@sanity/ui'
+import { clsxm } from '@zolplay/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
 
@@ -15,8 +16,15 @@ export function PortableTextVideo({
   _key: string
   url: string | undefined
   title: string
+  source: string
 }>) {
   const [isZoomed, setIsZoomed] = React.useState(false)
+
+  const hasLabel = React.useMemo(
+    () => typeof value.title === 'string' && value.title.length > 0,
+    [value.title]
+  )
+
   if (!value.url) {
     return <Card padding={4}>Missing Video URL</Card>
   }
@@ -30,14 +38,40 @@ export function PortableTextVideo({
       <Dialog.Root open={isZoomed} onOpenChange={setIsZoomed}>
         <AnimatePresence>
           {!isZoomed && (
-            <div>
-              <motion.div className="relative" layoutId={`image_${value._key}`}>
-                <Dialog.Trigger>
-                  <video className="rounded-xl md:rounded-3xl" controls>
-                    <source src={value.url} type="video/mp4" />
-                  </video>
+            <div
+              className={clsxm(
+                'w-full rounded-2xl bg-zinc-100  dark:bg-zinc-800',
+                hasLabel ? 'p-2' : 'px-2 pt-2'
+              )}
+            >
+              <motion.div className="relative">
+                <Dialog.Trigger className="relative z-20 w-full cursor-zoom-in rounded-xl pt-[56.25%] dark:brightness-75 dark:transition-[filter] dark:hover:brightness-100">
+                  <iframe
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                      border: 0,
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                    }}
+                    className="rounded-xl"
+                    src={
+                      value.source === 'bilibili'
+                        ? `${value.url}&autoplay=0`
+                        : value.url
+                    }
+                    title={value.title}
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
                 </Dialog.Trigger>
               </motion.div>
+              {hasLabel && (
+                <span className="flex w-full items-center justify-center text-center text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                  {value.title}
+                </span>
+              )}
             </div>
           )}
         </AnimatePresence>
@@ -69,9 +103,17 @@ export function PortableTextVideo({
                           duration: 0.5,
                         }}
                       >
-                        <video className="rounded-xl md:rounded-3xl" controls>
-                          <source src={value.url} type="video/mp4" />
-                        </video>
+                        <iframe
+                          style={{
+                            height: '100%',
+                            width: '100%',
+                            border: 0,
+                          }}
+                          src={`${value.url}?autoplay=0`}
+                          title={value.title}
+                          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                        ></iframe>
                       </motion.div>
                     </div>
                   </div>

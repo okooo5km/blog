@@ -132,13 +132,27 @@ export default defineType({
         {
           name: 'url',
           type: 'string',
-          title: 'Video Url',
+          title: 'Video URL',
         },
         {
           name: 'title',
           type: 'string',
           title: 'Video Title',
           initialValue: '',
+        },
+        {
+          name: 'source',
+          type: 'string',
+          title: 'Video Source',
+          initialValue: 'url',
+          options: {
+            list: [
+              { title: 'URL', value: 'url' },
+              { title: 'Youtube', value: 'youtube' },
+              { title: 'Bilibili', value: 'bilibili' },
+              { title: 'Vimeo', value: 'vimeo' },
+            ],
+          },
         },
       ],
       components: {
@@ -147,6 +161,8 @@ export default defineType({
       preview: {
         select: {
           url: 'url',
+          source: 'source',
+          title: 'title',
         },
       },
     }),

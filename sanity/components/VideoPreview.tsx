@@ -3,6 +3,8 @@ import { type PreviewProps } from 'sanity'
 
 type TweetProps = PreviewProps & {
   url: string | undefined
+  source: string
+  title?: string | undefined
 }
 
 export function VideoPreview(props: TweetProps) {
@@ -11,10 +13,20 @@ export function VideoPreview(props: TweetProps) {
   }
 
   return (
-    <Card>
-      <video controls>
-        <source src={props.url} type="video/mp4" />
-      </video>
-    </Card>
+    <div style={{ position: 'relative', paddingBottom: '56%' }}>
+      <iframe
+        style={{
+          height: '100%',
+          width: '100%',
+          border: 0,
+          maxWidth: '100%',
+          position: 'absolute',
+        }}
+        src={`${props.url}?autoplay=0`}
+        title={props.title}
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    </div>
   )
 }
