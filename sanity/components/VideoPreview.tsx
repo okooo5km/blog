@@ -22,7 +22,9 @@ export function VideoPreview(props: TweetProps) {
           maxWidth: '100%',
           position: 'absolute',
         }}
-        src={`${props.url}?autoplay=0`}
+        src={
+          props.source === 'bilibili' ? `${props.url}&autoplay=0` : props.url
+        }
         title={props.title}
         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
