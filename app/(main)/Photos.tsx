@@ -1,25 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
-
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import React from 'react'
 
+import highlight1 from '~/assets/highlights/highlight1.webp'
+import highlight2 from '~/assets/highlights/highlight2.webp'
+import highlight3 from '~/assets/highlights/highlight3.webp'
+import highlight4 from '~/assets/highlights/highlight4.webp'
+import highlight5 from '~/assets/highlights/highlight5.webp'
+import highlight6 from '~/assets/highlights/highlight6.webp'
+
 const alts = [
-  '大学说走就走的骑行之旅：青岛-北京',
-  '人生第一辆车直接买了国产的 SUV：小UNI',
+  '大学说走就走的骑行之旅',
   'INFJ 人格类型的我',
-  '千辛万苦终于有了自己的第一套房：小甜酱',
-  '九年义务恋爱画上句号新的课程开启',
+  '个人能力一览',
+  '教育经历非常普通',
+  '工作经历也很一般',
   '正式独立开发的第一款产品：Zipic',
 ]
 
 const images = [
-  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-biketour.webp',
-  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-infj.webp',
-  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-car.webp',
-  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-house.webp',
-  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-wedding.webp',
-  'https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/highlight-zipic.webp',
+  highlight1,
+  highlight2,
+  highlight3,
+  highlight4,
+  highlight5,
+  highlight6,
 ]
 
 export function Photos() {
@@ -57,9 +64,9 @@ export function Photos() {
       }}
     >
       <div className="-my-4 flex w-full snap-x snap-proximity scroll-pl-4 justify-start gap-4 overflow-x-auto px-4 py-4 sm:gap-6 md:justify-center md:overflow-x-hidden md:px-0">
-        {images.map((url, idx) => (
+        {images.map((image, idx) => (
           <motion.div
-            key={url}
+            key={image.src}
             className="relative h-40 flex-none shrink-0 snap-start overflow-hidden rounded-xl bg-zinc-100 ring-2 ring-lime-800/20 dark:bg-zinc-800 dark:ring-lime-300/10 md:h-72 md:rounded-3xl"
             animate={{
               width,
@@ -78,7 +85,12 @@ export function Photos() {
             }
             layout
           >
-            <img src={url} alt={alts[idx] ?? ''} className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"/>
+            <Image
+              src={image}
+              alt={alts[idx] ?? ''}
+              quality={80}
+              className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
+            />
           </motion.div>
         ))}
       </div>
