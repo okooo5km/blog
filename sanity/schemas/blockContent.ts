@@ -1,4 +1,5 @@
 import { defineArrayMember, defineType } from 'sanity'
+import { LatexPreview } from 'sanity-plugin-latex-input'
 
 import {
   ImageIcon,
@@ -36,7 +37,27 @@ export default defineType({
       // set corresponds with HTML tags, but you can set any title or value
       // you want, and decide how you want to deal with it where you want to
       // use your content.
-      of: [{ type: 'latex', icon: mathInlineIcon, title: 'Inline math' }],
+      of: [
+        {
+          type: 'object',
+          name: 'inlineLatex',
+          components: { preview: LatexPreview },
+          icon: mathInlineIcon,
+          title: 'Inline LaTeX',
+          fields: [
+            {
+              title: 'LaTeX content',
+              name: 'body',
+              type: 'text',
+            },
+          ],
+          preview: {
+            select: {
+              body: 'body',
+            },
+          },
+        },
+      ],
       styles: [
         { title: 'Normal', value: 'normal' },
         { title: 'H1', value: 'h1' },

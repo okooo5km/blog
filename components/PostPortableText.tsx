@@ -20,6 +20,7 @@ import { PortableTextTable } from '~/components/portable-text/PortableTextTable'
 import { PortableTextTweet } from '~/components/portable-text/PortableTextTweet'
 import { PortableTextVideo } from '~/components/portable-text/PortableTextVideo'
 
+import { PortableTextInlineLatex } from './portable-text/PortableTextInlineLatex'
 import { PortableTextLatex } from './portable-text/PortableTextLatex'
 
 const components: PortableTextComponents = {
@@ -39,6 +40,7 @@ const components: PortableTextComponents = {
     table: PortableTextTable,
     video: PortableTextVideo,
     latex: PortableTextLatex,
+    inlineLatex: PortableTextInlineLatex,
     otherImage: PortableTextOtherImage,
   },
 
