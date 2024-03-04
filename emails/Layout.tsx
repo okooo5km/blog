@@ -39,7 +39,7 @@ export default function Layout({
                 src={`${emailConfig.baseUrl}/icon.svg`}
                 width="24"
                 height="24"
-                alt="Cali"
+                alt="十里"
                 className="mx-auto my-0"
               />
               <Text className="text-center">
@@ -47,7 +47,7 @@ export default function Layout({
                   href="https://5km.studio"
                   className="text-zinc-700 underline"
                 >
-                  <strong>5km</strong>
+                  <strong>十里</strong>
                 </Link>
                 <br />
                 产品匠、设计师、细节控、独立创客
