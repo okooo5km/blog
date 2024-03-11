@@ -24,7 +24,6 @@ import { VideoPreview } from '~/sanity/components/VideoPreview'
  *    type: 'blockContent'
  *  }
  */
-
 export default defineType({
   title: 'Block Content',
   name: 'blockContent',
@@ -58,6 +57,8 @@ export default defineType({
           },
         },
       ],
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       styles: [
         { title: 'Normal', value: 'normal' },
         { title: 'H1', value: 'h1' },
@@ -105,6 +106,8 @@ export default defineType({
       type: 'image',
       icon: ImageIcon,
       options: { hotspot: true },
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       fields: [
         {
           name: 'alt',
@@ -128,6 +131,8 @@ export default defineType({
       name: 'tweet',
       title: 'Tweet',
       icon: TweetIcon,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       fields: [
         {
           name: 'id',
@@ -149,6 +154,8 @@ export default defineType({
       name: 'video',
       title: 'Video',
       icon: VideoIcon,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       fields: [
         {
           name: 'url',
@@ -192,6 +199,8 @@ export default defineType({
       name: 'otherImage',
       title: 'Web Image',
       icon: OtherImageIcon,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       fields: [
         {
           name: 'url',
