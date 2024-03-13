@@ -14,7 +14,7 @@ export const config = {
 async function beforeAuthMiddleware(req: NextRequest) {
   const { geo, nextUrl } = req
 
-  const blockedIPs: Array<string> = []; 
+  const blockedIPs: Array<string> = []
   const ip = getIP(req)
   const isApi = nextUrl.pathname.startsWith('/api/')
 
