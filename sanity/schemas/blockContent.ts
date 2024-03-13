@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineArrayMember, defineType } from 'sanity'
 import { LatexPreview } from 'sanity-plugin-latex-input'
 
@@ -25,7 +26,7 @@ import { VideoPreview } from '~/sanity/components/VideoPreview'
  *  }
  */
 export default defineType({
-  title: 'Block Content',
+  title: '块级富文本',
   name: 'blockContent',
   type: 'array',
   of: [
@@ -44,10 +45,10 @@ export default defineType({
           name: 'inlineLatex',
           components: { preview: LatexPreview },
           icon: mathInlineIcon,
-          title: 'Inline LaTeX',
+          title: '行内公式',
           fields: [
             {
-              title: 'LaTeX content',
+              title: 'LaTeX公式',
               name: 'body',
               type: 'text',
             },
@@ -62,27 +63,27 @@ export default defineType({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       styles: [
-        { title: 'Normal', value: 'normal' },
+        { title: '正文', value: 'normal' },
         { title: 'H1', value: 'h1' },
         { title: 'H2', value: 'h2' },
         { title: 'H3', value: 'h3' },
         { title: 'H4', value: 'h4' },
-        { title: 'Quote', value: 'blockquote' },
+        { title: '引用', value: 'blockquote' },
       ],
       lists: [
-        { title: 'Bullet', value: 'bullet' },
-        { title: 'Numbered', value: 'number' },
+        { title: '无序列表', value: 'bullet' },
+        { title: '有序列表', value: 'number' },
       ],
       // Marks let you mark up inline text in the Portable Text Editor
       marks: {
         // Decorators usually describe a single property – e.g. a typographic
         // preference or highlighting
         decorators: [
-          { title: 'Strong', value: 'strong' },
-          { title: 'Emphasis', value: 'em' },
-          { title: 'Underline', value: 'underline' },
-          { title: 'Strike', value: 'strike-through' },
-          { title: 'Code', value: 'code' },
+          { title: '加粗', value: 'strong' },
+          { title: '斜体', value: 'em' },
+          { title: '下划线', value: 'underline' },
+          { title: '删除线', value: 'strike-through' },
+          { title: '行内代码', value: 'code' },
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
@@ -105,6 +106,7 @@ export default defineType({
     // primitive types such as 'string' and 'number' in the same array
     // as a block type.
     defineArrayMember({
+      title: '图片',
       type: 'image',
       icon: ImageIcon,
       options: { hotspot: true },
@@ -114,24 +116,24 @@ export default defineType({
         {
           name: 'alt',
           type: 'string',
-          title: 'Alternative Text',
+          title: '替代文本',
         },
         {
           name: 'label',
           type: 'string',
-          title: 'Label',
+          title: '标注',
         },
       ],
     }),
     defineArrayMember({
       type: 'latex',
       icon: mathIcon,
-      title: 'Math block',
+      title: '块级公式',
     }),
     defineArrayMember({
       type: 'object',
       name: 'tweet',
-      title: 'Tweet',
+      title: '推文',
       icon: TweetIcon,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -139,7 +141,7 @@ export default defineType({
         {
           name: 'id',
           type: 'string',
-          title: 'Tweet ID',
+          title: '推文 ID',
         },
       ],
       components: {
@@ -154,7 +156,7 @@ export default defineType({
     defineArrayMember({
       type: 'object',
       name: 'video',
-      title: 'Video',
+      title: '视频',
       icon: VideoIcon,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -162,25 +164,25 @@ export default defineType({
         {
           name: 'url',
           type: 'string',
-          title: 'Video URL',
+          title: '视频链接',
         },
         {
           name: 'title',
           type: 'string',
-          title: 'Video Title',
+          title: '视频标题',
           initialValue: '',
         },
         {
           name: 'source',
           type: 'string',
-          title: 'Video Source',
+          title: '视频源',
           initialValue: 'url',
           options: {
             list: [
-              { title: 'URL', value: 'url' },
-              { title: 'Youtube', value: 'youtube' },
-              { title: 'Bilibili', value: 'bilibili' },
-              { title: 'Vimeo', value: 'vimeo' },
+              { title: '直链', value: 'url' },
+              { title: 'Youtube 链接', value: 'youtube' },
+              { title: 'B 站链接', value: 'bilibili' },
+              { title: 'Vimeo 链接', value: 'vimeo' },
             ],
           },
         },
@@ -192,14 +194,14 @@ export default defineType({
         select: {
           url: 'url',
           source: 'source',
-          title: 'title',
+          title: '标题',
         },
       },
     }),
     defineArrayMember({
       type: 'object',
       name: 'otherImage',
-      title: 'Web Image',
+      title: '直链图片',
       icon: OtherImageIcon,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -207,12 +209,12 @@ export default defineType({
         {
           name: 'url',
           type: 'string',
-          title: 'Image Url',
+          title: '链接',
         },
         {
           name: 'label',
           type: 'string',
-          title: 'Image Label',
+          title: '标注',
           initialValue: '',
         },
       ],
@@ -228,14 +230,14 @@ export default defineType({
     defineArrayMember({
       type: 'code',
       name: 'codeBlock',
-      title: 'Code Block',
+      title: '块级代码',
       options: {
         withFilename: true,
       },
     }),
     defineArrayMember({
       name: 'table',
-      title: 'table',
+      title: '表格',
       type: 'table',
       icon: TableIcon,
     }),

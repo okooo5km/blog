@@ -30,9 +30,9 @@ export default async function AdminCommentsPage() {
     this_month_count: number
   }>(
     sql`SELECT 
-  (SELECT COUNT(*) FROM comments WHERE DATE(created_at) = CURDATE()) as today_count,
-  (SELECT COUNT(*) FROM comments WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)) as this_week_count,
-  (SELECT COUNT(*) FROM comments WHERE YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE())) as this_month_count`
+  (SELECT COUNT(*) FROM comments WHERE created_at::date = CURRENT_DATE) AS today_count,
+  (SELECT COUNT(*) FROM comments WHERE EXTRACT('YEAR' FROM created_at) = EXTRACT('YEAR' FROM CURRENT_DATE) AND EXTRACT('WEEK' FROM created_at) = EXTRACT('WEEK' FROM CURRENT_DATE)) AS this_week_count,
+  (SELECT COUNT(*) FROM comments WHERE EXTRACT(YEAR FROM created_at) = EXTRACT(YEAR FROM CURRENT_DATE) AND EXTRACT(MONTH FROM created_at) = EXTRACT(MONTH FROM CURRENT_DATE)) AS this_month_count`
   )
 
   const latestComments = await db
@@ -42,13 +42,12 @@ export default async function AdminCommentsPage() {
     .limit(15)
   // get unique post IDs from comments
   const postIds = [...new Set(latestComments.map((comment) => comment.postId))]
-  const posts = await clientFetch<
-    { _id: string; title: string; slug: string }[]
-  >(
-    `*[_type == "post" && (_id in [${postIds
-      .map((v) => `"${v}"`)
-      .join(',')}])]{ _id, title, "slug":slug.current }`
-  )
+  const posts: { _id: string; title: string; slug: string }[] =
+    await clientFetch(
+      `*[_type == "post" && (_id in [${postIds
+        .map((v) => `"${v}"`)
+        .join(',')}])]{ _id, title, "slug":slug.current }`
+    )
   // define a map with key of post IDs to posts
   const postMap = new Map(posts.map((post) => [post._id, post]))
 

@@ -37,8 +37,7 @@ export default function CreateNewsletterPage() {
     const subscriberEmails = new Set([
       ...subs
         .filter((sub) => typeof sub.email === 'string' && sub.email.length > 0)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((sub) => sub.email!),
+        .map((sub) => sub.email),
     ])
 
     await resend.emails.send({

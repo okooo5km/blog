@@ -4,32 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import React from 'react'
 
-import highlight1 from '~/assets/highlights/highlight1.webp'
-import highlight2 from '~/assets/highlights/highlight2.webp'
-import highlight3 from '~/assets/highlights/highlight3.webp'
-import highlight4 from '~/assets/highlights/highlight4.webp'
-import highlight5 from '~/assets/highlights/highlight5.webp'
-import highlight6 from '~/assets/highlights/highlight6.webp'
-
-const alts = [
-  '大学说走就走的骑行之旅',
-  'INFJ 人格类型的我',
-  '个人能力一览',
-  '教育经历非常普通',
-  '工作经历也很一般',
-  '正式独立开发的第一款产品：Zipic',
-]
-
-const images = [
-  highlight1,
-  highlight2,
-  highlight3,
-  highlight4,
-  highlight5,
-  highlight6,
-]
-
-export function Photos() {
+export function Photos({ photos }: { photos: string[] }) {
   const [width, setWidth] = React.useState(0)
   const [isCompact, setIsCompact] = React.useState(false)
   const expandedWidth = React.useMemo(() => width * 1.38, [width])
@@ -42,7 +17,7 @@ export function Photos() {
         return setWidth(window.innerWidth / 2 - 64)
       }
 
-      setWidth(window.innerWidth / images.length - 4 * images.length)
+      setWidth(window.innerWidth / photos.length - 4 * photos.length)
     }
 
     window.addEventListener('resize', handleResize)
@@ -51,7 +26,7 @@ export function Photos() {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [photos.length])
 
   return (
     <motion.div
@@ -64,9 +39,9 @@ export function Photos() {
       }}
     >
       <div className="-my-4 flex w-full snap-x snap-proximity scroll-pl-4 justify-start gap-4 overflow-x-auto px-4 py-4 sm:gap-6 md:justify-center md:overflow-x-hidden md:px-0">
-        {images.map((image, idx) => (
+        {photos.map((image, idx) => (
           <motion.div
-            key={image.src}
+            key={idx}
             className="relative h-40 flex-none shrink-0 snap-start overflow-hidden rounded-xl bg-zinc-100 ring-2 ring-lime-800/20 dark:bg-zinc-800 dark:ring-lime-300/10 md:h-72 md:rounded-3xl"
             animate={{
               width,
@@ -87,9 +62,12 @@ export function Photos() {
           >
             <Image
               src={image}
-              alt={alts[idx] ?? ''}
-              quality={80}
+              alt=""
+              width={500}
+              height={500}
+              sizes="(min-width: 640px) 18rem, 11rem"
               className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
+              unoptimized
             />
           </motion.div>
         ))}

@@ -88,8 +88,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         ...guestbookData,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        id: GuestbookHashids.encode(newGuestbook!.newId),
+        id: GuestbookHashids.encode(newGuestbook.newId),
         createdAt: new Date(),
       } satisfies GuestbookDto,
       {
