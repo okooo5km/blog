@@ -92,9 +92,7 @@ export default async function BlogPage({
     if (env.VERCEL_ENV === 'development') {
       relatedViews = post.related.map(() => Math.floor(Math.random() * 1000))
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const postIdKeys = post.related.map(({ _id }) => kvKeys.postViews(_id))
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       relatedViews = await redis.mget<number[]>(...postIdKeys)
     }
   }

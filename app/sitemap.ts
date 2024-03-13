@@ -30,7 +30,6 @@ export default async function sitemap() {
     lastModified: new Date(),
   })) satisfies MetadataRoute.Sitemap
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return [...staticMap, ...dynamicMap]
 }
 

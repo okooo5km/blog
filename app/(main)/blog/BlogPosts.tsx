@@ -12,14 +12,12 @@ export async function BlogPosts({ limit = 5 }) {
     return (<strong>🏃 我的新文章很快就会发布，不要着急！</strong>)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const postIdKeys = posts.map(({ _id }) => kvKeys.postViews(_id))
 
   let views: number[] = []
   if (env.VERCEL_ENV === 'development') {
     views = posts.map(() => Math.floor(Math.random() * 1000))
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     views = await redis.mget<number[]>(...postIdKeys)
   }
 
