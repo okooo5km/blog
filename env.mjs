@@ -7,7 +7,9 @@ const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
   DATABASE_URL: z.string().min(1),
   RESEND_API_KEY: z.string().min(1),
-  VERCEL_ENV: z.enum(['development', 'preview', 'production']),
+  VERCEL_ENV: z
+    .enum(['development', 'preview', 'production'])
+    .default('development'),
   UPSTASH_REDIS_REST_URL: z.string().min(1),
   UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
   LINK_PREVIEW_API_BASE_URL: z.string().optional(),
@@ -20,6 +22,7 @@ const client = z.object({
   NEXT_PUBLIC_SANITY_USE_CDN: z.boolean(),
   NEXT_PUBLIC_SITE_URL: z.string().min(1),
   NEXT_PUBLIC_SITE_EMAIL_FROM: z.string().min(1),
+  NEXT_PUBLIC_SITE_LINK_PREVIEW_ENABLED: z.boolean().optional().default(false),
 })
 
 /**
@@ -42,6 +45,8 @@ const processEnv = {
   NEXT_PUBLIC_SITE_EMAIL_FROM: process.env.NEXT_PUBLIC_SITE_EMAIL_FROM,
   LINK_PREVIEW_API_BASE_URL: process.env.LINK_PREVIEW_API_BASE_URL,
   SITE_NOTIFICATION_EMAIL_TO: process.env.SITE_NOTIFICATION_EMAIL_TO,
+  NEXT_PUBLIC_SITE_LINK_PREVIEW_ENABLED:
+    process.env.NEXT_PUBLIC_SITE_LINK_PREVIEW_ENABLED == 'true',
 }
 
 // Don't touch the part below

@@ -9,10 +9,8 @@ import React from 'react'
 
 import { RichLink } from '~/components/links/RichLink'
 import { HoverCard } from '~/components/ui/HoverCard'
+import { env } from '~/env.mjs'
 import { makeBlurDataURL } from '~/lib/image'
-
-// 改成 false 就可以关闭链接预览快照图了
-const supportsPreview = false
 
 type PeekabooLinkProps = LinkProps &
   React.ComponentPropsWithoutRef<'a'> & {
@@ -35,7 +33,7 @@ export function PeekabooLink({
     )
   }
 
-  if (!supportsPreview) {
+  if (!env.NEXT_PUBLIC_SITE_LINK_PREVIEW_ENABLED) {
     return (
       <RichLink
         href={href}
@@ -73,7 +71,7 @@ export function PeekabooLink({
       <AnimatePresence mode="wait">
         {isOpen && (
           <HoverCard.Portal forceMount>
-            <HoverCard.Content asChild>
+            <HoverCard.Content asChild collisionPadding={250}>
               <motion.div
                 className="pointer-events-none relative z-50 w-[400px] origin-top overflow-hidden !p-0"
                 initial={{
