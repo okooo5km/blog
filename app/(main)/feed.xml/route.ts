@@ -27,6 +27,7 @@ export async function GET() {
       guid: post._id,
       url: `${seo.url.href}blog/${post.slug}`,
       description: post.description,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       date: new Date(post.publishedAt),
       enclosure: {
         url: post.mainImage.asset.url,
