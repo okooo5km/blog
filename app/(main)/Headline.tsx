@@ -27,7 +27,7 @@ function Designer() {
       </span>
       <span className="group">
         <DesignerIcon className="ml-1 mr-2 inline-flex transform-gpu transition-transform duration-500 group-hover:rotate-180" />
-        <span className='ml-1 mr-4'>设计师</span>
+        <span className="ml-1 mr-4">设计师</span>
       </span>
     </span>
   )
@@ -35,7 +35,7 @@ function Designer() {
 
 function OCD() {
   return (
-    <span className="group">
+    <span className="group inline-flex items-center">
       <CometIcon className="mr-2 inline-flex transform-gpu transition-transform duration-500 group-hover:rotate-180" />
       <span>细节控</span>
     </span>
@@ -44,7 +44,7 @@ function OCD() {
 
 function Founder() {
   return (
-    <span className="group">
+    <span className="group inline-flex items-center">
       <BulbIcon className="mr-1 inline-flex group-hover:fill-zinc-600/20 dark:group-hover:fill-zinc-200/20" />
       <span>独立创客</span>
     </span>
@@ -83,7 +83,8 @@ export function Headline() {
         }}
       >
         <Balancer>
-          🔖 <b>Hi，我是5km！</b>自认为是独立创客，在探寻极简创业之道，致力于持续创造出优秀作品，目前专注于桌面应用开发。我热爱开发（软件或硬件）和设计🔥，喜欢创新和探索新事物，期待与大家有深度的交流📮。
+          🔖 <b>Hi，我是5km！</b>
+          自认为是独立创客，在探寻极简创业之道，致力于持续创造出优秀作品，目前专注于桌面应用开发。我热爱开发（软件或硬件）和设计🔥，喜欢创新和探索新事物，期待与大家有深度的交流📮。
         </Balancer>
       </motion.p>
       <motion.div
@@ -98,21 +99,9 @@ export function Headline() {
           delay: 0.25,
         }}
       >
-        <SocialLink
-          href="/twitter"
-          aria-label="我的推特"
-          platform="twitter"
-        />
-        <SocialLink
-          href="/github"
-          aria-label="我的 GitHub"
-          platform="github"
-        />
-        <SocialLink
-          href="/tg"
-          aria-label="我的 Telegram"
-          platform="telegram"
-        />
+        <SocialLink href="/twitter" aria-label="我的推特" platform="twitter" />
+        <SocialLink href="/github" aria-label="我的 GitHub" platform="github" />
+        <SocialLink href="/tg" aria-label="我的 Telegram" platform="telegram" />
         <SocialLink
           href="/bilibili"
           aria-label="我的 Bilibili"
