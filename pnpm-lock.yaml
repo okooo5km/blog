@@ -23,9 +23,6 @@ dependencies:
   '@portabletext/react':
     specifier: ^3.0.11
     version: 3.0.11(react@18.2.0)
-  '@portabletext/to-html':
-    specifier: ^2.0.13
-    version: 2.0.13
   '@radix-ui/react-dialog':
     specifier: ^1.0.5
     version: 1.0.5(@types/react-dom@18.2.21)(@types/react@18.2.65)(react-dom@18.2.0)(react@18.2.0)
@@ -2508,31 +2505,11 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@portabletext/to-html@2.0.13:
-    resolution: {integrity: sha512-T3zL+2RcPCPGCp7rRrGrNJnGAqkdlpiOZnb/wh4tjDYJevteGY+5hmA0/5idLXzLiPv6vT8Gld852Sc0aFXwUA==}
-    engines: {node: ^14.13.1 || >=16.0.0}
-    dependencies:
-      '@portabletext/toolkit': 2.0.15
-      '@portabletext/types': 2.0.13
-    dev: false
-
   /@portabletext/toolkit@2.0.10:
     resolution: {integrity: sha512-d+F9JvpnMEx7kd6saZ9OWA4U1Iwuokh6TOht7iqkfWU+0ivh9yM4v+b0Kpu+iiPcElicoabhtXol+yTvWJ1jDw==}
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
       '@portabletext/types': 2.0.8
-    dev: false
-
-  /@portabletext/toolkit@2.0.15:
-    resolution: {integrity: sha512-KRNEUAd6eOxE9y591qC0sE24ZG2q27OHXe0dsPclj4IoEzf8aEuDcHR64wfFtB0aHq9Wdx3pIinmhZZcl35/vg==}
-    engines: {node: ^14.13.1 || >=16.0.0}
-    dependencies:
-      '@portabletext/types': 2.0.13
-    dev: false
-
-  /@portabletext/types@2.0.13:
-    resolution: {integrity: sha512-5xk5MSyQU9CrDho3Rsguj38jhijhD36Mk8S6mZo3huv6PM+t4M/5kJN2KFIxgvt4ONpvOEs1pVIZAV0cL0Vi+Q==}
-    engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
     dev: false
 
   /@portabletext/types@2.0.8:
