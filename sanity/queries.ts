@@ -50,10 +50,53 @@ export const getLatestBlogPostsQuery = ({
       }
     }
   }`
+
+export const getLatestBlogPostsWithBodyQuery = ({
+  limit = 5,
+  forDisplay = true,
+}: GetBlogPostsOptions) =>
+  groq`
+  *[_type == "post" && !(_id in path("drafts.**")) && publishedAt <= "${getDate().toISOString()}"
+  && defined(slug.current)]
+| order(publishedAt desc)[0...${limit}] {
+    _id,
+    title,
+    "slug": slug.current,
+    "categories": categories[]->title,
+    description,
+    publishedAt,
+    readingTime,
+    body[] {
+      ...,
+      _type == "image" => {
+        "url": asset->url,
+        "lqip": asset->metadata.lqip,
+        "dimensions": asset->metadata.dimensions,
+        ...
+      }
+    },
+    mainImage {
+      _ref,
+      asset->{
+        url,
+        ${
+          forDisplay
+            ? '"lqip": metadata.lqip, "dominant": metadata.palette.dominant,'
+            : ''
+        }
+      }
+    }
+  }`
+
 export const getLatestBlogPosts = (options: GetBlogPostsOptions) =>
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   client.fetch<Post[] | null>(getLatestBlogPostsQuery(options))
+
+export const getLatestBlogPostsWithBody = (options: GetBlogPostsOptions) =>
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  client.fetch<Post[] | null>(getLatestBlogPostsWithBodyQuery(options))
 
 export const getBlogPostQuery = groq`
   *[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {

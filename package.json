@@ -19,6 +19,7 @@
     "@mdx-js/loader": "^2.3.0",
     "@neondatabase/serverless": "^0.9.0",
     "@portabletext/react": "^3.0.11",
+    "@portabletext/to-html": "^2.0.13",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-hover-card": "^1.0.7",
     "@radix-ui/react-select": "^1.2.2",
