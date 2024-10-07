@@ -14,6 +14,14 @@ export async function GET() {
     language: 'zh-CN',
     image_url: `${seo.url.href}opengraph-image.png`,
     generator: 'PHP 9.0',
+    custom_elements: [
+      {
+        follow_challenge: [
+          { feedid: '59154114520141824' },
+          { userid: '55790185154902016' },
+        ],
+      },
+    ],
   })
 
   const data = await getLatestBlogPosts({ limit: 999 })
