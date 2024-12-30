@@ -69,7 +69,7 @@ export function PortableTextProduct({
                   <img
                     src={imageUrl}
                     className={clsxm(
-                      'relative z-20 cursor-zoom-in dark:brightness-75 dark:transition-[filter] dark:hover:brightness-100',
+                      'relative z-20 cursor-zoom-in dark:brightness-90 dark:transition-[filter] dark:hover:brightness-100',
                       'rounded-lg'
                     )}
                     alt={value.title}
@@ -112,7 +112,7 @@ export function PortableTextProduct({
                 {/* 按钮 */}
                 <a href={value.link} target="_blank" className="block">
                   <button className="mt-4 w-full rounded-full bg-zinc-900 py-2 text-sm text-zinc-100 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200">
-                    查看详情
+                    {value.actionTitle}
                   </button>
                 </a>
               </div>
