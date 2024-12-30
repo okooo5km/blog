@@ -2,7 +2,7 @@ import * as React from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import { parseDisplayName } from '../lib/string'
-import { Button, Heading, Hr, Img, Link, Section, Text } from './_components'
+import { Button, Heading, Hr, Link, Section, Text } from './_components'
 import Layout from './Layout'
 
 const NewReplyCommentEmail = ({
@@ -33,7 +33,7 @@ const NewReplyCommentEmail = ({
       <Heading>{title}</Heading>
       <Section className="mt-[24px]">
         {postImageUrl && (
-          <Img
+          <img
             src={postImageUrl}
             alt=""
             width="100%"
@@ -42,7 +42,7 @@ const NewReplyCommentEmail = ({
         )}
         <Text className="text-[14px] leading-[24px] text-black">
           {userImageUrl && (
-            <Img
+            <img
               src={userImageUrl}
               alt=""
               width="24"

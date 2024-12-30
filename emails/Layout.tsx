@@ -7,7 +7,6 @@ import {
   Head,
   Hr,
   Html,
-  Img,
   Link,
   Preview,
   Section,
@@ -37,7 +36,7 @@ export default function Layout({
           <Container className="mx-auto mt-[32px] w-[465px]">
             <Hr className="mx-0 my-[20px] h-px w-full bg-zinc-100" />
             <Section>
-              <Img
+              <img
                 src={`${emailConfig.baseUrl}/icon.svg`}
                 width="24"
                 height="24"

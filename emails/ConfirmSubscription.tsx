@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { emailConfig } from '../config/email'
-import { Button, Heading, Hr, Img, Link, Section, Text } from './_components'
+import { Button, Heading, Hr, Link, Section, Text } from './_components'
 import Layout from './Layout'
 
 const ConfirmSubscriptionEmail = ({ link = 'link.com/confirm?fake-token' }) => {
@@ -10,7 +10,7 @@ const ConfirmSubscriptionEmail = ({ link = 'link.com/confirm?fake-token' }) => {
   return (
     <Layout previewText={previewText}>
       <Section className="mt-[24px]">
-        <Img
+        <img
           src={`${emailConfig.baseUrl}/subscription-email-header.jpg`}
           width="250"
           height="129.28"
