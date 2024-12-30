@@ -7,11 +7,13 @@ import {
   mathIcon,
   mathInlineIcon,
   OtherImageIcon,
+  ProductIcon,
   TableIcon,
   TweetIcon,
   VideoIcon,
 } from '~/sanity/components/Icons'
 import { OtherImagePreview } from '~/sanity/components/OtherImagePreview'
+import { ProductPreview } from '~/sanity/components/ProductPreview'
 import { Tweet } from '~/sanity/components/Tweet'
 import { VideoPreview } from '~/sanity/components/VideoPreview'
 
@@ -224,6 +226,75 @@ export default defineType({
       preview: {
         select: {
           url: 'url',
+        },
+      },
+    }),
+    defineArrayMember({
+      type: 'object',
+      name: 'product',
+      title: '产品',
+      icon: ProductIcon,
+      fields: [
+        {
+          name: 'image',
+          type: 'image',
+          title: '产品图片',
+          options: {
+            hotspot: true,
+          },
+        },
+        {
+          name: 'link',
+          type: 'url',
+          title: '产品链接',
+          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: 'title',
+          type: 'string',
+          title: '名称',
+          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: 'description',
+          type: 'text',
+          title: '描述',
+          rows: 3,
+        },
+        {
+          name: 'discount',
+          type: 'string',
+          title: '折扣',
+        },
+        {
+          name: 'rating',
+          type: 'number',
+          title: '评分',
+          initialValue: 4.5,
+          options: {
+            min: 0,
+            max: 5,
+          },
+        },
+        {
+          name: 'actionTitle',
+          type: 'string',
+          title: '按钮标题',
+          initialValue: '查看详情',
+        },
+      ],
+      components: {
+        preview: ProductPreview as any,
+      },
+      preview: {
+        select: {
+          image: 'image',
+          title: 'title',
+          link: 'link',
+          description: 'description',
+          discount: 'discount',
+          rating: 'rating',
+          actionTitle: 'actionTitle',
         },
       },
     }),

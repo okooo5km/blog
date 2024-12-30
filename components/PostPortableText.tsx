@@ -16,6 +16,7 @@ import {
 import { PortableTextCodeBlock } from '~/components/portable-text/PortableTextCodeBlock'
 import { PortableTextImage } from '~/components/portable-text/PortableTextImage'
 import { PortableTextOtherImage } from '~/components/portable-text/PortableTextOtherImage'
+import { PortableTextProduct } from '~/components/portable-text/PortableTextProduct'
 import { PortableTextTable } from '~/components/portable-text/PortableTextTable'
 import { PortableTextTweet } from '~/components/portable-text/PortableTextTweet'
 import { PortableTextVideo } from '~/components/portable-text/PortableTextVideo'
@@ -42,6 +43,7 @@ const components: PortableTextComponents = {
     latex: PortableTextLatex,
     inlineLatex: PortableTextInlineLatex,
     otherImage: PortableTextOtherImage,
+    product: PortableTextProduct,
   },
 
   marks: {

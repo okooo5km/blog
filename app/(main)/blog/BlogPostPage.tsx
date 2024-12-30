@@ -58,8 +58,8 @@ export function BlogPostPage({
           <article data-postid={post._id}>
             <header className="relative flex flex-col items-center pb-5 after:absolute after:-bottom-1 after:block after:h-px after:w-full after:rounded after:bg-gradient-to-r after:from-zinc-400/20 after:via-zinc-200/10 after:to-transparent dark:after:from-zinc-600/20 dark:after:via-zinc-700/10">
               <motion.div
-                className="relative mb-7 aspect-[240/135] w-full md:mb-12 md:w-[120%]"
-                initial={{ opacity: 0, scale: 0.96, y: 10 }}
+                className="relative mb-8 aspect-[240/135] w-full md:mb-12"
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{
                   duration: 0.35,
@@ -68,7 +68,7 @@ export function BlogPostPage({
                   damping: 20,
                 }}
               >
-                <div className="absolute z-0 hidden aspect-[240/135] w-full blur-xl saturate-150 after:absolute after:inset-0 after:hidden after:bg-white/50 dark:after:bg-black/50 md:block md:after:block">
+                {/* <div className="absolute z-0 hidden aspect-[240/135] w-full blur-lg saturate-150 after:absolute after:inset-0 after:hidden after:bg-white/50 dark:after:bg-black/50 md:block md:after:block">
                   <Image
                     src={post.mainImage.asset.url}
                     alt=""
@@ -77,7 +77,7 @@ export function BlogPostPage({
                     fill
                     aria-hidden={true}
                   />
-                </div>
+                </div> */}
                 <Image
                   src={post.mainImage.asset.url}
                   alt={post.title}
