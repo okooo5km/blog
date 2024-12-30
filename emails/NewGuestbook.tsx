@@ -2,7 +2,7 @@ import * as React from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import { parseDisplayName } from '../lib/string'
-import { Button, Heading, Hr, Section, Text } from './_components'
+import { Button, Heading, Hr, Img, Section, Text } from './_components'
 import Layout from './Layout'
 
 const NewGuestbookEmail = ({
@@ -30,7 +30,7 @@ const NewGuestbookEmail = ({
       <Section className="mt-[24px]">
         <Text className="text-[14px] leading-[24px] text-black">
           {userImageUrl && (
-            <img
+            <Img
               src={userImageUrl}
               alt=""
               width="24"

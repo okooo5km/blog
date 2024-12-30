@@ -39,14 +39,15 @@ export function ProjectCard({ project }: { project: Project }) {
       onMouseEnter={() => setIsHovering(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setIsHovering(false)}
+      className=""
     >
-      <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+      <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full">
         <Image
-          src={urlForImage(icon)?.size(100, 100).auto('format').url()}
+          src={urlForImage(icon)?.size(128, 128).auto('format').url()}
           alt=""
-          width={36}
-          height={36}
-          className="h-9 w-9 rounded-full"
+          width={64}
+          height={64}
+          className=""
           unoptimized
         />
       </div>
@@ -73,8 +74,8 @@ export function ProjectCard({ project }: { project: Project }) {
             exit={{ opacity: 0 }}
           >
             <div className="absolute inset-x-px inset-y-px rounded-2xl border border-dashed border-zinc-900/30 dark:border-zinc-100/20" />
-            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-dashed border-zinc-900/20 bg-white dark:border-zinc-100/20 dark:bg-zinc-800">
-              <div className="h-9 w-9 rounded-full border border-dashed border-zinc-900/40 dark:border-zinc-100/60 dark:bg-zinc-900/20" />
+            <div className="flex h-20 w-20 items-center justify-center rounded-full border border-dashed border-zinc-900/20 bg-white dark:border-zinc-100/20 dark:bg-zinc-800">
+              <div className="h-16 w-16 rounded-full border border-dashed border-zinc-900/40 dark:border-zinc-100/60 dark:bg-zinc-900/20" />
             </div>
             <h2 className="mt-6 text-base font-bold text-zinc-50 [text-shadow:rgb(0,0,0)_-0.5px_0.5px_0px,rgb(0,0,0)_0.5px_0.5px_0px,rgb(0,0,0)_0.5px_-0.5px_0px,rgb(0,0,0)_-0.5px_-0.5px_0px] dark:text-zinc-900 dark:[text-shadow:rgb(255,255,255)_-0.5px_0.5px_0px,rgb(255,255,255)_0.5px_0.5px_0px,rgb(255,255,255)_0.5px_-0.5px_0px,rgb(255,255,255)_-0.5px_-0.5px_0px]">
               {name}

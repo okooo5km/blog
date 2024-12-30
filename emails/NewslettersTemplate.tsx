@@ -1,7 +1,7 @@
 import * as React from 'react'
 import ReactMarkdown from 'react-markdown'
 
-import { Heading, Section } from './_components'
+import { Heading, Img, Section } from './_components'
 import Layout from './Layout'
 
 const NewslettersTemplate = (props: {
@@ -25,7 +25,7 @@ const NewslettersTemplate = (props: {
             components={{
               img: ({ src, alt }) => {
                 return (
-                  <img
+                  <Img
                     src={src}
                     alt={alt}
                     className="mx-auto my-0 max-w-[465px]"
