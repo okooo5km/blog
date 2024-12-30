@@ -12,6 +12,7 @@ import {
   type PostIDLessCommentDto,
 } from '~/db/dto/comment.dto'
 import { comments } from '~/db/schema'
+import NewCommentEmail from '~/emails/NewComment'
 import NewReplyCommentEmail from '~/emails/NewReplyComment'
 import { env } from '~/env.mjs'
 import { url } from '~/lib'
@@ -123,35 +124,56 @@ export async function POST(req: NextRequest, { params }: Params) {
       parentId: parentId ? (parentId as number) : null,
     }
 
-    if (parentId && env.NODE_ENV === 'production') {
-      const [parentUserFromDb] = await db
-        .select({
-          userId: comments.userId,
-        })
-        .from(comments)
-        .where(eq(comments.id, parentId as number))
-      if (parentUserFromDb && parentUserFromDb.userId !== user.id) {
-        const { primaryEmailAddressId, emailAddresses } =
-          await clerkClient.users.getUser(parentUserFromDb.userId)
-        const primaryEmailAddress = emailAddresses.find(
-          (emailAddress) => emailAddress.id === primaryEmailAddressId
-        )
-        if (primaryEmailAddress) {
-          await resend.emails.send({
-            from: emailConfig.from,
-            to: primaryEmailAddress.emailAddress,
-            subject: '👋 有人回复了你的评论',
-            react: NewReplyCommentEmail({
-              postTitle: post.title,
-              postLink: url(`/blog/${post.slug}`).href,
-              postImageUrl: post.imageUrl,
-              userFirstName: user.firstName,
-              userLastName: user.lastName,
-              userImageUrl: user.imageUrl,
-              commentContent: body.text,
-            }),
+    // 如果是生产环境
+    if (env.NODE_ENV === 'production') {
+      // 如果是回复评论
+      if (parentId) {
+        const [parentUserFromDb] = await db
+          .select({
+            userId: comments.userId,
           })
+          .from(comments)
+          .where(eq(comments.id, parentId as number))
+        if (parentUserFromDb && parentUserFromDb.userId !== user.id) {
+          const { primaryEmailAddressId, emailAddresses } =
+            await clerkClient.users.getUser(parentUserFromDb.userId)
+          const primaryEmailAddress = emailAddresses.find(
+            (emailAddress) => emailAddress.id === primaryEmailAddressId
+          )
+          if (primaryEmailAddress) {
+            await resend.emails.send({
+              from: emailConfig.from,
+              to: primaryEmailAddress.emailAddress,
+              subject: '👋 有人回复了你的评论',
+              react: NewReplyCommentEmail({
+                postTitle: post.title,
+                postLink: url(`/blog/${post.slug}`).href,
+                postImageUrl: post.imageUrl,
+                userFirstName: user.firstName,
+                userLastName: user.lastName,
+                userImageUrl: user.imageUrl,
+                commentContent: body.text,
+              }),
+            })
+          }
         }
+      }
+      // 如果是新评论（非回复），发送通知给站长
+      else {
+        await resend.emails.send({
+          from: emailConfig.from,
+          to: env.SITE_NOTIFICATION_EMAIL_TO,
+          subject: '✨ 收到了新的评论',
+          react: NewCommentEmail({
+            postTitle: post.title,
+            postLink: url(`/blog/${post.slug}`).href,
+            postImageUrl: post.imageUrl,
+            userFirstName: user.firstName,
+            userLastName: user.lastName,
+            userImageUrl: user.imageUrl,
+            commentContent: body.text,
+          }),
+        })
       }
     }
 

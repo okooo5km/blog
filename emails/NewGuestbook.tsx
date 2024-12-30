@@ -9,7 +9,7 @@ const NewGuestbookEmail = ({
   link = 'https://5km.studio/guestbook',
   userFirstName = '',
   userLastName = '5km',
-  userImageUrl = 'https://5km.studio/icon.svg',
+  userImageUrl = 'https://5km.studio/icon.png',
   commentContent = '*测试评论*\n- Wow wtf\n- Cool',
 }: {
   link?: string | null

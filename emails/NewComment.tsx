@@ -1,3 +1,4 @@
+// emails/NewComment.tsx
 import * as React from 'react'
 import ReactMarkdown from 'react-markdown'
 
@@ -5,7 +6,7 @@ import { parseDisplayName } from '../lib/string'
 import { Button, Heading, Hr, Img, Link, Section, Text } from './_components'
 import Layout from './Layout'
 
-const NewReplyCommentEmail = ({
+const NewCommentEmail = ({
   postLink = 'https://5km.studio',
   postTitle = '测试文章 Lorem ipsum dolor sit amet, consectetur adipisicing elit',
   postImageUrl = 'https://cn.zolplay.com/api/og?title=测试文章',
@@ -26,7 +27,7 @@ const NewReplyCommentEmail = ({
     firstName: userFirstName,
     lastName: userLastName,
   })
-  const title = `👋 有人回复了你的评论`
+  const title = `✨ 收到了新的评论`
 
   return (
     <Layout previewText={title}>
@@ -53,11 +54,11 @@ const NewReplyCommentEmail = ({
         </Text>
         {postLink && (
           <Text className="text-[14px] leading-[24px] text-black">
-            <b>{user}</b>&nbsp;在 「
+            <b>{user}</b>&nbsp;在你的文章「
             <Link href={postLink} className="font-bold underline">
               {postTitle}
             </Link>
-            」中回复了你：
+            」下发表了评论：
           </Text>
         )}
       </Section>
@@ -76,7 +77,7 @@ const NewReplyCommentEmail = ({
             className="rounded-xl bg-zinc-900 text-center text-[12px] font-semibold text-white no-underline"
             href={postLink}
           >
-            查看文章
+            回复评论
           </Button>
         )}
       </Section>
@@ -93,4 +94,4 @@ const NewReplyCommentEmail = ({
   )
 }
 
-export default NewReplyCommentEmail
+export default NewCommentEmail
