@@ -1,5 +1,4 @@
 'use client'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import va from '@vercel/analytics'
 import { clsxm } from '@zolplay/utils'
@@ -30,12 +29,16 @@ export function Newsletter({ subCount }: { subCount?: string }) {
     defaultValues: { formId },
     resolver: zodResolver(newsletterFormSchema),
   })
-  const [isSubscribed, setIsSubscribed] = React.useState(false)
+  const [status, setStatus] = React.useState<'idle' | 'success' | 'error'>(
+    'idle'
+  )
+  const [message, setMessage] = React.useState('')
   const { reward } = useReward('newsletter-rewards', 'emoji', {
     position: 'absolute',
     emoji: ['🤓', '😊', '🥳', '🤩', '🤪', '🤯', '🥰', '😎', '🤑', '🤗', '😇'],
     elementCount: 32,
   })
+
   const onSubmit = React.useCallback(
     async (data: NewsletterForm) => {
       try {
@@ -50,23 +53,36 @@ export function Newsletter({ subCount }: { subCount?: string }) {
           },
           body: JSON.stringify({ data }),
         })
+
+        const result = await response.json()
+
         if (response.ok) {
           reset()
           reward()
-          setIsSubscribed(true)
+          setStatus('success')
+          setMessage(result.message) // 使用后端返回的具体消息
+        } else {
+          setStatus('error')
+          setMessage(result.error || '订阅失败，请稍后重试')
         }
       } catch (error) {
         console.error(error)
+        setStatus('error')
+        setMessage('网络错误，请稍后重试')
       }
     },
     [isSubmitting, reset, reward]
   )
 
   React.useEffect(() => {
-    if (isSubscribed) {
-      setTimeout(() => setIsSubscribed(false), 60000)
+    if (status === 'success') {
+      const timer = setTimeout(() => {
+        setStatus('idle')
+        setMessage('')
+      }, 60000)
+      return () => clearTimeout(timer)
     }
-  }, [isSubscribed])
+  }, [status])
 
   return (
     <form
@@ -89,10 +105,19 @@ export function Newsletter({ subCount }: { subCount?: string }) {
             加入其他 <span className="font-medium">{subCount}</span> 位订阅者，
           </span>
         )}
-        <span>每月一封，随时可以取消订阅。</span>
+        <span>
+          随时可以{' '}
+          <a
+            href="/unsubscribe"
+            className="underline hover:text-zinc-900 dark:hover:text-zinc-100"
+          >
+            取消订阅
+          </a>
+          。
+        </span>
       </p>
       <AnimatePresence mode="wait">
-        {!isSubscribed ? (
+        {status === 'idle' ? (
           <motion.div
             className="mt-6 flex h-10"
             initial={{ opacity: 0, y: 10 }}
@@ -117,12 +142,17 @@ export function Newsletter({ subCount }: { subCount?: string }) {
           </motion.div>
         ) : (
           <motion.p
-            className="mt-6 h-10 text-center text-lg text-zinc-700 dark:text-zinc-300"
+            className={clsxm(
+              'mt-6 h-10 text-center text-lg',
+              status === 'success'
+                ? 'text-zinc-700 dark:text-zinc-300'
+                : 'text-red-600 dark:text-red-400'
+            )}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit="initial"
           >
-            请查收订阅确认邮件 🥳
+            {message}
           </motion.p>
         )}
       </AnimatePresence>

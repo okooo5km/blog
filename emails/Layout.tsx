@@ -18,9 +18,11 @@ import {
 export default function Layout({
   previewText,
   children,
+  unsubscribeUrl,
 }: {
   previewText: string
   children: React.ReactNode
+  unsubscribeUrl?: string
 }) {
   return (
     <Html>
@@ -61,26 +63,24 @@ export default function Layout({
                 </Link>{' '}
                 |&nbsp;
                 <Link
-                  href="/youtube"
-                  className="text-xs text-zinc-600 underline"
-                >
-                  YouTube
-                </Link>{' '}
-                |&nbsp;
-                <Link
                   href="/github"
                   className="text-xs text-zinc-600 underline"
                 >
                   GitHub
-                </Link>{' '}
-                |&nbsp;
-                <Link
-                  href="/bilibili"
-                  className="text-xs text-zinc-600 underline"
-                >
-                  哔哩哔哩
                 </Link>
               </Text>
+              {/* 添加取消订阅链接 */}
+              {unsubscribeUrl && (
+                <Text className="mt-4 text-center text-xs text-zinc-400">
+                  如果您不想继续接收此类邮件，可以
+                  <Link
+                    href={unsubscribeUrl}
+                    className="text-zinc-400 underline"
+                  >
+                    点击这里退订
+                  </Link>
+                </Text>
+              )}
             </Section>
           </Container>
         </Body>

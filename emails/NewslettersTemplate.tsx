@@ -9,9 +9,14 @@ const NewslettersTemplate = (props: {
   body?: string | null
 }) => {
   const { subject = '测试主题', body = `## 测试内容` } = props
+  const unsubscribeUrl = `${
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : process.env.NEXT_PUBLIC_SITE_URL
+  }/unsubscribe`
 
   return (
-    <Layout previewText={subject ?? ''}>
+    <Layout previewText={subject ?? ''} unsubscribeUrl={unsubscribeUrl}>
       <Heading>{subject}</Heading>
 
       {body && (
