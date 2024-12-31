@@ -1,9 +1,15 @@
 import { Card } from '@sanity/ui'
+import { ArrowRight, Star, Tag } from 'lucide-react'
 import { type PreviewProps } from 'sanity'
-import { Star, StarHalf } from 'lucide-react'
 
 type ProductProps = PreviewProps & {
-  image: any
+  image: {
+    asset: {
+      _ref: string
+      _type: string
+    }
+    _type: string
+  }
   link: string
   title: string
   description: string
@@ -25,7 +31,7 @@ export function ProductPreview(props: ProductProps) {
     ? `https://cdn.sanity.io/images/${projectId}/${dataset}/${imageData[1]}-${imageData[2]}.${imageData[3]}`
     : ''
 
-  const rating = props.rating || 4.5
+  const rating = props.rating || 5
 
   return (
     <Card className="flex flex-col items-center justify-center space-y-4 rounded-lg bg-white p-4 text-black shadow-md dark:bg-gray-900 dark:text-white">
@@ -36,36 +42,56 @@ export function ProductPreview(props: ProductProps) {
           className="h-48 w-full object-cover"
         />
       </Card>
-      <div className="flex flex-row items-center justify-between">
-        <div className="text-xl font-bold">{props.title}</div>
-        <div className="flex items-center">
-          {[...Array(5)].map((_, i) => {
-            const isHalf = rating - i >= 0.5 && rating - i < 1
-            return (
-              <span key={i}>
-                {i < Math.floor(rating) ? (
-                  <Star className="h-5 w-5 fill-current text-yellow-400" />
-                ) : isHalf ? (
-                  <StarHalf className="h-5 w-5 fill-current text-yellow-400" />
-                ) : (
-                  <Star className="h-5 w-5 fill-current text-gray-300" />
-                )}
-              </span>
+      {/* 标题和星级评分在同一行 */}
+      <div className="mt-4 flex flex-row items-center justify-between">
+        <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+          {props.title}
+        </span>
+        <div className="flex items-center gap-0.5">
+          {Array.from({ length: 5 }).map((_, i) => {
+            const isHalf = rating - i > 0 && rating - i < 1
+            const isFull = rating - i >= 1
+            return isFull ? (
+              <Star
+                key={i}
+                className="h-4 w-4 fill-yellow-400 text-yellow-400"
+              />
+            ) : isHalf ? (
+              <div key={i} className="relative">
+                <Star className="h-4 w-4 text-yellow-400" />
+                <div className="absolute inset-0 w-[50%] overflow-hidden">
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                </div>
+              </div>
+            ) : (
+              <Star key={i} className="h-4 w-4 text-yellow-400" />
             )
           })}
         </div>
       </div>
-      <p className="text-center text-sm text-gray-500 dark:text-gray-300">
-        {props.description}
-      </p>
+
+      {/* 标签信息 */}
+      {props.discount && (
+        <div className="mt-1 flex items-center gap-0.5 text-xs">
+          <Tag className="h-3 w-3" />
+          {props.discount}
+        </div>
+      )}
+
+      {props.description && (
+        <p className="text-sm text-gray-500 dark:text-gray-300">
+          {props.description}
+        </p>
+      )}
       <a
         href={props.link}
         target="_blank"
         rel="noopener noreferrer"
         className="w-full"
       >
-        <button className="w-full rounded-lg px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2  dark:text-white dark:hover:bg-gray-200">
+        <button className="flex w-full flex-row gap-2 rounded-lg p-2 text-sm font-medium text-black hover:bg-white dark:text-white dark:hover:bg-gray-200">
           {props.actionTitle}
+          <ArrowRight className="h-4 w-4" />
         </button>
       </a>
     </Card>

@@ -6,7 +6,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { Card } from '@sanity/ui'
 import { clsxm } from '@zolplay/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Star } from 'lucide-react'
+import { ArrowRight, Star, Tag } from 'lucide-react'
 import React from 'react'
 
 import { ClientOnly } from '~/components/ClientOnly'
@@ -104,15 +104,28 @@ export function PortableTextProduct({
                   </div>
                 </div>
 
+                {/* 标签信息 */}
+                {value.discount && (
+                  <div className="mt-1 flex items-center gap-0.5 text-xs">
+                    <Tag className="h-3 w-3" />
+                    {value.discount}
+                  </div>
+                )}
+
                 {/* 描述文字 */}
-                <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
-                  {value.description}
-                </p>
+                {value.description && (
+                  <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+                    {value.description}
+                  </p>
+                )}
 
                 {/* 按钮 */}
                 <a href={value.link} target="_blank" className="block">
-                  <button className="mt-4 w-full rounded-full bg-zinc-900 py-2 text-sm text-zinc-100 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200">
-                    {value.actionTitle}
+                  <button className="mt-2 w-full rounded-full bg-zinc-900 py-2 text-sm text-zinc-100 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200">
+                    <span className="flex items-center justify-center gap-0.5 text-xs">
+                      {value.actionTitle}
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
                   </button>
                 </a>
               </div>
