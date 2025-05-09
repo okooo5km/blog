@@ -1,4 +1,3 @@
-import { count, isNotNull } from 'drizzle-orm'
 import Link from 'next/link'
 import React from 'react'
 
@@ -7,8 +6,6 @@ import { PeekabooLink } from '~/components/links/PeekabooLink'
 import { Container } from '~/components/ui/Container'
 import { kvKeys } from '~/config/kv'
 import { navigationItems } from '~/config/nav'
-import { db } from '~/db'
-import { subscribers } from '~/db/schema'
 import { env } from '~/env.mjs'
 import { prettifyNumber } from '~/lib/math'
 import { redis } from '~/lib/redis'
@@ -99,12 +96,7 @@ async function LastVisitorInfo() {
 }
 
 export async function Footer() {
-  const [subs] = await db
-    .select({
-      subCount: count(),
-    })
-    .from(subscribers)
-    .where(isNotNull(subscribers.subscribedAt))
+  await Promise.resolve()
 
   return (
     <footer className="mt-32">
@@ -112,7 +104,7 @@ export async function Footer() {
         <div className="border-t border-zinc-100 pb-16 pt-10 dark:border-zinc-700/40">
           <Container.Inner>
             <div className="mx-auto mb-8 max-w-md">
-              <Newsletter subCount={`${subs?.subCount ?? '0'}`} />
+              <Newsletter />
             </div>
             <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
               <p className="text-sm text-zinc-500/80 dark:text-zinc-400/80">
