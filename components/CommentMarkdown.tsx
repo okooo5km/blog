@@ -8,10 +8,24 @@ import { AtMention } from '~/components/AtMention'
 import { RichLink } from '~/components/links/RichLink'
 
 export function CommentMarkdown({ children }: { children: string }) {
-  // 预处理文本，将 @提及 转换为特殊的链接格式
+  // 更智能的 @ 提及处理：只处理不在 Markdown 链接中的 @ 提及
   const processedText = children.replace(
-    /@([^\s]+)/g,
-    '[@$1](mention:$1)'
+    // 负向前瞻：确保 @ 前面不是 ]( 或 ](
+    // 负向后瞻：确保 @ 后面匹配的用户名后不是 ](
+    /(?<!\]\(.*?)@([^\s\]]+)(?!\]\()/g,
+    (match, username) => {
+      // 额外检查：如果这个 @ 在方括号内，说明可能是 Markdown 链接的一部分
+      const beforeAt = children.substring(0, children.indexOf(match))
+      const openBrackets = (beforeAt.match(/\[/g) || []).length
+      const closeBrackets = (beforeAt.match(/\]/g) || []).length
+      
+      // 如果方括号不匹配，说明我们在一个未关闭的方括号内，跳过
+      if (openBrackets > closeBrackets) {
+        return match
+      }
+      
+      return `[@${username}](mention:${username})`
+    }
   )
   
   return (

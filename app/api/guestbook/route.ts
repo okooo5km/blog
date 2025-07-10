@@ -148,15 +148,27 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// 提取消息中的 @ 提及
+// 提取消息中的 @ 提及（忽略 Markdown 链接中的 @）
 function extractMentions(message: string): string[] {
-  const mentionRegex = /@([^\s]+)/g
   const mentions: string[] = []
-  let match
   
-  while ((match = mentionRegex.exec(message)) !== null) {
-    mentions.push(match[1])
-  }
+  // 使用同样的逻辑：只处理不在 Markdown 链接中的 @ 提及
+  message.replace(
+    /(?<!\]\(.*?)@([^\s\]]+)(?!\]\()/g,
+    (match, username) => {
+      // 额外检查：如果这个 @ 在方括号内，说明可能是 Markdown 链接的一部分
+      const beforeAt = message.substring(0, message.indexOf(match))
+      const openBrackets = (beforeAt.match(/\[/g) || []).length
+      const closeBrackets = (beforeAt.match(/\]/g) || []).length
+      
+      // 如果方括号不匹配，说明我们在一个未关闭的方括号内，跳过
+      if (openBrackets <= closeBrackets) {
+        mentions.push(username)
+      }
+      
+      return match
+    }
+  )
   
   return mentions
 }
