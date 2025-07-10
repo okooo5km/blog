@@ -1,4 +1,5 @@
 import { currentUser } from '@clerk/nextjs'
+import { clerkClient } from '@clerk/nextjs/server'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -63,19 +64,66 @@ export async function POST(req: NextRequest) {
       },
     }
 
-    if (env.NODE_ENV === 'production' && env.SITE_NOTIFICATION_EMAIL_TO) {
-      await resend.emails.send({
-        from: emailConfig.from,
-        to: env.SITE_NOTIFICATION_EMAIL_TO,
-        subject: '👋 有人刚刚在留言墙留言了',
-        react: NewGuestbookEmail({
-          link: url(`/guestbook`).href,
-          userFirstName: user.firstName,
-          userLastName: user.lastName,
-          userImageUrl: user.imageUrl,
-          commentContent: message,
-        }),
-      })
+    // 解析 @ 提及的用户
+    const mentionedUsernames = extractMentions(message)
+    const emailsToNotify: string[] = []
+    
+    // 发送邮件通知
+    if (env.RESEND_API_KEY) {
+      // 获取所有留言墙消息以找到对应的用户
+      if (mentionedUsernames.length > 0) {
+        const messages = await fetchGuestbookMessages()
+        const mentionedUserIds = new Set<string>()
+        
+        // 匹配用户名找到用户ID
+        for (const msg of messages) {
+          if (msg.userInfo) {
+            const fullName = `${msg.userInfo.firstName || ''} ${msg.userInfo.lastName || ''}`.trim()
+            if (mentionedUsernames.some(username => fullName.includes(username))) {
+              mentionedUserIds.add(msg.userId)
+            }
+          }
+        }
+        
+        // 获取被提及用户的邮箱
+        for (const userId of mentionedUserIds) {
+          try {
+            const clerkUser = await clerkClient.users.getUser(userId)
+            const email = clerkUser.emailAddresses[0]?.emailAddress
+            if (email) {
+              emailsToNotify.push(email)
+            }
+          } catch (error) {
+            console.error(`Failed to get email for user ${userId}:`, error)
+          }
+        }
+      }
+      
+      // 如果没有提及任何人，或者管理员不在被提及列表中，通知管理员
+      const adminEmail = env.SITE_NOTIFICATION_EMAIL_TO
+      if (adminEmail && !emailsToNotify.includes(adminEmail)) {
+        emailsToNotify.push(adminEmail)
+      }
+      
+      // 发送邮件通知
+      if (emailsToNotify.length > 0) {
+        await Promise.all(
+          emailsToNotify.map(email =>
+            resend.emails.send({
+              from: emailConfig.from,
+              to: email,
+              subject: email === adminEmail ? '👋 有人刚刚在留言墙留言了' : '👋 有人在留言墙提到了你',
+              react: NewGuestbookEmail({
+                link: url(`/guestbook`).href,
+                userFirstName: user.firstName,
+                userLastName: user.lastName,
+                userImageUrl: user.imageUrl,
+                commentContent: message,
+              }),
+            })
+          )
+        )
+      }
     }
 
     const [newGuestbook] = await db
@@ -98,4 +146,17 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error }, { status: 400 })
   }
+}
+
+// 提取消息中的 @ 提及
+function extractMentions(message: string): string[] {
+  const mentionRegex = /@([^\s]+)/g
+  const mentions: string[] = []
+  let match
+  
+  while ((match = mentionRegex.exec(message)) !== null) {
+    mentions.push(match[1])
+  }
+  
+  return mentions
 }

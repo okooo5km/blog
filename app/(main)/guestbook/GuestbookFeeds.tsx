@@ -37,7 +37,7 @@ function Message({
       <div className="relative flex items-start space-x-3">
         <Image
           src={
-            message.userInfo.imageUrl ?? `/avatars/avatar_${(idx % 8) + 1}.png`
+            message.userInfo?.imageUrl ?? `/avatars/avatar_${(idx % 8) + 1}.png`
           }
           alt=""
           width={40}
@@ -47,7 +47,7 @@ function Message({
         />
         <div className="-mt-1 flex min-w-0 flex-1 items-center gap-3">
           <b className="text-sm font-bold dark:text-zinc-100">
-            {parseDisplayName(message.userInfo)}
+            {parseDisplayName(message.userInfo || {})}
           </b>
           <time
             dateTime={message.createdAt.toString()}
