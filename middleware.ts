@@ -56,7 +56,15 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   // Geo tracking via headers (Next.js 15 removed req.geo)
   if (!isApi && env.VERCEL_ENV === 'production') {
     const country = req.headers.get('x-vercel-ip-country') ?? undefined
-    const city = req.headers.get('x-vercel-ip-city') ?? undefined
+    const rawCity = req.headers.get('x-vercel-ip-city') ?? undefined
+    let city = rawCity
+    if (rawCity) {
+      try {
+        city = decodeURIComponent(rawCity)
+      } catch {
+        city = rawCity
+      }
+    }
 
     if (country) {
       const countryInfo = countries.find((x) => x.cca2 === country)
