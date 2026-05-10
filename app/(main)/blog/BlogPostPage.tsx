@@ -8,6 +8,7 @@ import Balancer from 'react-wrap-balancer'
 
 import { BlogPostStateLoader } from '~/app/(main)/blog/BlogPostStateLoader'
 import { BlogReactions } from '~/app/(main)/blog/BlogReactions'
+import { Sponsor } from '~/app/(main)/Sponsor'
 import {
   CalendarIcon,
   CursorClickIcon,
@@ -185,6 +186,10 @@ export function BlogPostPage({
           </div>
         </aside>
       </div>
+
+      <section className="mx-auto mt-16 max-w-md">
+        <Sponsor />
+      </section>
 
       {post.related && post.related.length > 0 ? (
         <section className="mb-12 mt-32">

@@ -10,7 +10,7 @@ import { env } from '~/env.mjs'
 import { prettifyNumber } from '~/lib/math'
 import { redis } from '~/lib/redis'
 
-import { Newsletter } from './Newsletter'
+import { FooterSponsorLinks } from './FooterSponsorLinks'
 
 function NavLink({
   href,
@@ -112,9 +112,6 @@ export async function Footer() {
       <Container.Outer>
         <div className="border-t border-zinc-100 pb-16 pt-10 dark:border-zinc-700/40">
           <Container.Inner>
-            <div className="mx-auto mb-8 max-w-md">
-              <Newsletter />
-            </div>
             <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
               <p className="text-sm text-zinc-500/80 dark:text-zinc-400/80">
                 &copy; {new Date().getFullYear()} • 5km •{' '}
@@ -127,16 +124,19 @@ export async function Footer() {
             </div>
           </Container.Inner>
           <Container.Inner className="mt-6">
-            <div className="flex flex-col items-center justify-start gap-2 sm:flex-row">
-              <React.Suspense>
-                <TotalPageViews />
-              </React.Suspense>
-              <span className="hidden text-xs text-zinc-500 dark:text-zinc-400 sm:inline">
-                ・
-              </span>
-              <React.Suspense>
-                <LastVisitorInfo />
-              </React.Suspense>
+            <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+              <div className="flex flex-col items-center justify-start gap-2 sm:flex-row">
+                <React.Suspense>
+                  <TotalPageViews />
+                </React.Suspense>
+                <span className="hidden text-xs text-zinc-500 dark:text-zinc-400 sm:inline">
+                  ・
+                </span>
+                <React.Suspense>
+                  <LastVisitorInfo />
+                </React.Suspense>
+              </div>
+              <FooterSponsorLinks />
             </div>
           </Container.Inner>
         </div>
