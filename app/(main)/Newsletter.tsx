@@ -2,23 +2,12 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import React from 'react'
-import { useReward } from 'react-rewards'
 
 import { TiltedSendIcon } from '~/assets'
 import { Button } from '~/components/ui/Button'
 
 export function Newsletter() {
   const [isQRCodeVisible, setIsQRCodeVisible] = React.useState(false)
-  const { reward } = useReward('newsletter-rewards', 'emoji', {
-    position: 'absolute',
-    emoji: ['🤓', '😊', '🥳', '🤩', '🤪', '🤯', '🥰', '😎', '🤑', '🤗', '😇'],
-    elementCount: 32,
-  })
-
-  const handleShowQRCode = React.useCallback(() => {
-    setIsQRCodeVisible(true)
-    reward()
-  }, [reward])
 
   return (
     <div className="relative rounded-2xl border border-zinc-100 p-6 transition-opacity dark:border-zinc-700/40">
@@ -32,21 +21,28 @@ export function Newsletter() {
       <AnimatePresence mode="wait">
         {!isQRCodeVisible ? (
           <motion.div
+            key="cta"
             className="mt-6 flex h-10 justify-center"
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit="initial"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
           >
-            <Button onClick={handleShowQRCode} className="flex-none">
+            <Button
+              onClick={() => setIsQRCodeVisible(true)}
+              className="flex-none"
+            >
               查看二维码
             </Button>
           </motion.div>
         ) : (
           <motion.div
+            key="qrcode"
             className="mt-6 flex flex-col items-center"
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit="initial"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
           >
             <div className="relative h-48 w-48 overflow-hidden rounded-lg">
               <Image
@@ -62,7 +58,6 @@ export function Newsletter() {
           </motion.div>
         )}
       </AnimatePresence>
-      <span id="newsletter-rewards" className="relative h-0 w-0" />
     </div>
   )
 }
