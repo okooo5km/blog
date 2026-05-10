@@ -8,6 +8,7 @@ import Balancer from 'react-wrap-balancer'
 
 import { BlogPostStateLoader } from '~/app/(main)/blog/BlogPostStateLoader'
 import { BlogReactions } from '~/app/(main)/blog/BlogReactions'
+import { ParagraphCommentsHint } from '~/app/(main)/blog/ParagraphCommentsHint'
 import { Sponsor } from '~/app/(main)/Sponsor'
 import {
   CalendarIcon,
@@ -171,6 +172,7 @@ export function BlogPostPage({
                 </span>
               </motion.div>
             </header>
+            <ParagraphCommentsHint postKey={post._id} />
             <Prose className="mt-8">
               <PostPortableText value={post.body} />
             </Prose>
