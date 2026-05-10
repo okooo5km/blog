@@ -3,7 +3,7 @@ import { Coffee, MessageCircle, Wallet } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 
-import { ElegantTooltip } from '~/components/ui/Tooltip'
+import { ElegantPopover } from '~/components/ui/Popover'
 
 export type SponsorLink = {
   key: string
@@ -53,7 +53,7 @@ export function Sponsor() {
       </p>
       <div className="mt-6 flex items-center justify-center gap-4">
         {SPONSOR_LINKS.map(({ key, label, cta, src, Icon, hoverClass }) => (
-          <ElegantTooltip
+          <ElegantPopover
             key={key}
             contentClassName="!p-3"
             content={
@@ -63,10 +63,10 @@ export function Sponsor() {
                   alt={`${label}二维码`}
                   width={750}
                   height={1124}
-                  sizes="240px"
-                  className="h-auto w-60 rounded"
+                  sizes="288px"
+                  className="h-auto w-72 rounded"
                 />
-                <span className="mt-2 w-60 text-center text-xs font-medium text-zinc-700 dark:text-zinc-300">
+                <span className="mt-2 w-72 text-center text-xs font-medium text-zinc-700 dark:text-zinc-300">
                   {cta}
                 </span>
               </div>
@@ -79,7 +79,7 @@ export function Sponsor() {
             >
               <Icon className="h-5 w-5" />
             </button>
-          </ElegantTooltip>
+          </ElegantPopover>
         ))}
       </div>
     </div>
