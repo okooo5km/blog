@@ -198,8 +198,8 @@ importers:
         specifier: ^8.5.3
         version: 8.5.3(@types/react@19.2.13)(react@19.2.4)
       react-tweet:
-        specifier: ^3.2.0
-        version: 3.2.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^3.3.1
+        version: 3.3.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-wrap-balancer:
         specifier: ^1.1.0
         version: 1.1.0(react@19.2.4)
@@ -4333,9 +4333,6 @@ packages:
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
-
-  '@swc/helpers@0.5.6':
-    resolution: {integrity: sha512-aYX01Ke9hunpoCexYAgQucEpARGQ5w/cqHFrIR+e9gdKb1QWTsVJuTJ2ozQzIAxLyRQe/m+2RqzkyOOGiMKRQA==}
 
   '@tailwindcss/typography@0.5.10':
     resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
@@ -9157,8 +9154,8 @@ packages:
       react: 19.2.4
       react-dom: 19.2.4
 
-  react-tweet@3.2.0:
-    resolution: {integrity: sha512-eYLAX5ViOICQT/vkte/IzYZZDoBnl7hDO3Ns4++lKEFr/+BohPK5Rg+Lvbfx78Qtn3AjfDG5c6n+rOt7c2J6qg==}
+  react-tweet@3.3.1:
+    resolution: {integrity: sha512-0Gj1YgBTe1K85NBMoWBlUc17Rdc67gIJLlacrVgj+3jWIoXpFfxPdZ1U5OnWkkF9zxhphqs2pY1i//JBfP3Qog==}
     peerDependencies:
       react: 19.2.4
       react-dom: 19.2.4
@@ -9905,11 +9902,6 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-
-  swr@2.2.5:
-    resolution: {integrity: sha512-QtxqyclFeAsxEUeZIYmsaQ0UjimSq1RZ9Un7I68/0ClKK/U3LoyQunwkQfJZr2fc22DfIXLNDc2wFyTEikCUpg==}
-    peerDependencies:
-      react: 19.2.4
 
   swr@2.3.4:
     resolution: {integrity: sha512-bYd2lrhc+VarcpkgWclcUi92wYCpOgMws9Sd1hG1ntAu0NEy+14CbotuFjshBU2kt9rYj9TSmDcybpxpeTU1fg==}
@@ -15022,10 +15014,6 @@ snapshots:
       react: 19.2.4
 
   '@swc/helpers@0.5.15':
-    dependencies:
-      tslib: 2.8.1
-
-  '@swc/helpers@0.5.6':
     dependencies:
       tslib: 2.8.1
 
@@ -20914,14 +20902,13 @@ snapshots:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
-  react-tweet@3.2.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+  react-tweet@3.3.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
-      '@swc/helpers': 0.5.6
+      '@swc/helpers': 0.5.15
       clsx: 2.1.0
-      date-fns: 2.30.0
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
-      swr: 2.2.5(react@19.2.4)
+      swr: 2.3.4(react@19.2.4)
 
   react-virtuoso@4.18.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
@@ -22084,12 +22071,6 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
-
-  swr@2.2.5(react@19.2.4):
-    dependencies:
-      client-only: 0.0.1
-      react: 19.2.4
-      use-sync-external-store: 1.2.0(react@19.2.4)
 
   swr@2.3.4(react@19.2.4):
     dependencies:
