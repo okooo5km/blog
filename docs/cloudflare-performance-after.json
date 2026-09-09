@@ -1,0 +1,56 @@
+[
+  {
+    "path": "/",
+    "sample": 1,
+    "measurement": "200 2.706575 3.638740 208761",
+    "error": ""
+  },
+  {
+    "path": "/",
+    "sample": 2,
+    "measurement": "200 2.706410 3.528168 208761",
+    "error": ""
+  },
+  {
+    "path": "/",
+    "sample": 3,
+    "measurement": "200 5.259812 6.095219 208761",
+    "error": ""
+  },
+  {
+    "path": "/blog",
+    "sample": 1,
+    "measurement": "200 1.680191 2.766094 300714",
+    "error": ""
+  },
+  {
+    "path": "/blog",
+    "sample": 2,
+    "measurement": "200 2.550243 3.574992 300714",
+    "error": ""
+  },
+  {
+    "path": "/blog",
+    "sample": 3,
+    "measurement": "200 2.448879 3.354309 300714",
+    "error": ""
+  },
+  {
+    "path": "/blog/5km-littlebox-illustrations",
+    "sample": 1,
+    "measurement": "200 3.695133 4.700562 196342",
+    "error": ""
+  },
+  {
+    "path": "/blog/5km-littlebox-illustrations",
+    "sample": 2,
+    "measurement": "200 2.936373 3.702388 196342",
+    "error": ""
+  },
+  {
+    "path": "/blog/5km-littlebox-illustrations",
+    "sample": 3,
+    "measurement": "200 2.515103 3.411476 196342",
+    "error": ""
+  }
+]

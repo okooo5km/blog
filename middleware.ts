@@ -1,11 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { type NextRequest, NextResponse } from 'next/server'
 
-import { kvKeys } from '~/config/kv'
-import { env } from '~/env.mjs'
-import countries from '~/lib/countries.json'
 import { getIP } from '~/lib/ip'
-import { redis } from '~/lib/redis'
 
 export const config = {
   matcher: ['/((?!_next|studio|.*\\..*).*)'],
@@ -51,28 +47,6 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   if (nextUrl.pathname === '/blocked') {
     nextUrl.pathname = '/'
     return NextResponse.redirect(nextUrl)
-  }
-
-  // Geo tracking via headers (Next.js 15 removed req.geo)
-  if (!isApi && env.VERCEL_ENV === 'production') {
-    const country = req.headers.get('x-vercel-ip-country') ?? undefined
-    const rawCity = req.headers.get('x-vercel-ip-city') ?? undefined
-    let city = rawCity
-    if (rawCity) {
-      try {
-        city = decodeURIComponent(rawCity)
-      } catch {
-        city = rawCity
-      }
-    }
-
-    if (country) {
-      const countryInfo = countries.find((x) => x.cca2 === country)
-      if (countryInfo) {
-        const flag = countryInfo.flag
-        await redis.set(kvKeys.currentVisitor, { country, city, flag })
-      }
-    }
   }
 
   if (!isPublicRoute(req)) {

@@ -46,3 +46,9 @@ static/
 
 .react-email/
 /.idea
+
+# Cloudflare
+.open-next/
+.wrangler/
+.dev.vars*
+.migration-private/

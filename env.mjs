@@ -5,13 +5,13 @@ import { z } from 'zod'
  */
 const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
-  DATABASE_URL: z.string().min(1),
+  DATABASE_URL: z.string().optional(),
   RESEND_API_KEY: z.string().min(1),
-  VERCEL_ENV: z
+  APP_ENV: z
     .enum(['development', 'preview', 'production'])
     .default('development'),
-  UPSTASH_REDIS_REST_URL: z.string().min(1),
-  UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
+  UPSTASH_REDIS_REST_URL: z.string().optional(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
   LINK_PREVIEW_API_BASE_URL: z.string().optional(),
   SITE_NOTIFICATION_EMAIL_TO: z.string().optional(),
 })
@@ -35,7 +35,7 @@ const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
   DATABASE_URL: process.env.DATABASE_URL,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
-  VERCEL_ENV: process.env.VERCEL_ENV,
+  APP_ENV: process.env.APP_ENV ?? process.env.VERCEL_ENV,
   UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
   UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
   NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,

@@ -16,9 +16,7 @@ import { db } from '~/db'
 import { subscribers } from '~/db/schema'
 
 export default async function AdminSubscribersPage() {
-  const {
-    rows: [count],
-  } = await db.execute<{ total: number }>(
+  const [count] = await db.all<{ total: number }>(
     sql`SELECT 
   (SELECT COUNT(*) FROM subscribers WHERE subscribed_at IS NOT NULL) as total`
   )

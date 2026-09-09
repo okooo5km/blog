@@ -2,7 +2,7 @@ import { clerkClient, currentUser } from '@clerk/nextjs/server'
 import { type NextRequest, NextResponse } from 'next/server'
 
 import { fetchGuestbookMessages } from '~/db/queries/guestbook'
-import { ratelimit } from '~/lib/redis'
+import { ratelimit } from '~/lib/ratelimit'
 
 export async function GET(_req: NextRequest) {
   const user = await currentUser()

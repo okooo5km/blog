@@ -1,6 +1,7 @@
 'use client'
 
 import { PortableText, type PortableTextComponents } from '@portabletext/react'
+import dynamic from 'next/dynamic'
 import React from 'react'
 
 import { PeekabooLink } from '~/components/links/PeekabooLink'
@@ -13,7 +14,6 @@ import {
   PortableTextBlocksListItem,
   PortableTextBlocksNormal,
 } from '~/components/portable-text/PortableTextBlocks'
-import { PortableTextCodeBlock } from '~/components/portable-text/PortableTextCodeBlock'
 import { PortableTextImage } from '~/components/portable-text/PortableTextImage'
 import { PortableTextOtherImage } from '~/components/portable-text/PortableTextOtherImage'
 import { PortableTextProduct } from '~/components/portable-text/PortableTextProduct'
@@ -21,8 +21,23 @@ import { PortableTextTable } from '~/components/portable-text/PortableTextTable'
 import { PortableTextTweet } from '~/components/portable-text/PortableTextTweet'
 import { PortableTextVideo } from '~/components/portable-text/PortableTextVideo'
 
-import { PortableTextInlineLatex } from './portable-text/PortableTextInlineLatex'
-import { PortableTextLatex } from './portable-text/PortableTextLatex'
+const PortableTextCodeBlock = dynamic(() =>
+  import('./portable-text/PortableTextCodeBlock').then(
+    (module) => module.PortableTextCodeBlock
+  )
+)
+
+const PortableTextLatex = dynamic(() =>
+  import('./portable-text/PortableTextLatex').then(
+    (module) => module.PortableTextLatex
+  )
+)
+
+const PortableTextInlineLatex = dynamic(() =>
+  import('./portable-text/PortableTextInlineLatex').then(
+    (module) => module.PortableTextInlineLatex
+  )
+)
 
 const components: PortableTextComponents = {
   block: {

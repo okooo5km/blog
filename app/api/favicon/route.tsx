@@ -3,9 +3,9 @@ import { ImageResponse } from 'next/og'
 import { type NextRequest, NextResponse } from 'next/server'
 
 import { getIP } from '~/lib/ip'
-import { ratelimit, redis } from '~/lib/redis'
+import { ratelimit } from '~/lib/ratelimit'
+import { storage } from '~/lib/storage'
 
-export const runtime = 'edge'
 export const revalidate = 259200 // 3 days
 
 function getKey(url: string) {
@@ -71,7 +71,7 @@ export async function GET(req: NextRequest) {
       return renderFavicon(predefinedIcon)
     }
 
-    const cachedFavicon = await redis.get<string>(getKey(url))
+    const cachedFavicon = await storage.get<string>(getKey(url))
     if (cachedFavicon) {
       return renderFavicon(cachedFavicon)
     }
@@ -95,14 +95,14 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    await redis.set(getKey(url), iconUrl, { ex: revalidate })
+    await storage.set(getKey(url), iconUrl, { ex: revalidate })
 
     return renderFavicon(iconUrl)
   } catch (e) {
     console.error(e)
   }
 
-  await redis.set(getKey(url), iconUrl, { ex: revalidate })
+  await storage.set(getKey(url), iconUrl, { ex: revalidate })
 
   return renderFavicon(iconUrl)
 }

@@ -41,7 +41,6 @@ import {
   type CommentDto,
   type PostIDLessCommentDto,
 } from '~/db/dto/comment.dto'
-import { url } from '~/lib'
 import { parseDisplayName } from '~/lib/string'
 
 dayjs.extend(relativeTime)
@@ -290,7 +289,7 @@ function Root({ className, blockId }: CommentableProps) {
                       <div className="flex justify-center">
                         <SignInButton
                           mode="modal"
-                          forceRedirectUrl={url(pathname).href}
+                          forceRedirectUrl={pathname}
                         >
                           <Button type="button">
                             <UserArrowLeftIcon className="mr-1 h-5 w-5" />

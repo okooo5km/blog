@@ -22,17 +22,15 @@ import { truncate } from '~/lib/string'
 import { client } from '~/sanity/lib/client'
 
 export default async function AdminCommentsPage() {
-  const {
-    rows: [commentsCount],
-  } = await db.execute<{
+  const [commentsCount] = await db.all<{
     today_count: number
     this_week_count: number
     this_month_count: number
   }>(
     sql`SELECT 
-  (SELECT COUNT(*) FROM comments WHERE created_at::date = CURRENT_DATE) AS today_count,
-  (SELECT COUNT(*) FROM comments WHERE EXTRACT('YEAR' FROM created_at) = EXTRACT('YEAR' FROM CURRENT_DATE) AND EXTRACT('WEEK' FROM created_at) = EXTRACT('WEEK' FROM CURRENT_DATE)) AS this_week_count,
-  (SELECT COUNT(*) FROM comments WHERE EXTRACT(YEAR FROM created_at) = EXTRACT(YEAR FROM CURRENT_DATE) AND EXTRACT(MONTH FROM created_at) = EXTRACT(MONTH FROM CURRENT_DATE)) AS this_month_count`
+  (SELECT COUNT(*) FROM comments WHERE created_at >= unixepoch('now', 'start of day') * 1000) AS today_count,
+  (SELECT COUNT(*) FROM comments WHERE created_at >= unixepoch('now', 'start of day', '-6 days', 'weekday 1') * 1000) AS this_week_count,
+  (SELECT COUNT(*) FROM comments WHERE created_at >= unixepoch('now', 'start of month') * 1000) AS this_month_count`
   )
 
   const latestComments = await db

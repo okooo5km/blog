@@ -4,10 +4,10 @@ import { type PortableTextComponentProps } from '@portabletext/react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
-import { LatexPreview, type LatexPreviewProps } from 'sanity-plugin-latex-input'
 
 import { ClientOnly } from '~/components/ClientOnly'
 import { Commentable } from '~/components/Commentable'
+import { Latex } from '~/components/Latex'
 
 export function PortableTextLatex({
   value,
@@ -16,11 +16,6 @@ export function PortableTextLatex({
   _type: string
   body?: string
 }>) {
-  const _child: LatexPreviewProps = {
-    body: value.body?.toString() ?? '',
-    layout: 'block',
-  }
-
   const [isZoomed, setIsZoomed] = React.useState(false)
 
   return (
@@ -36,7 +31,7 @@ export function PortableTextLatex({
               <motion.div className="relative">
                 <Dialog.Trigger className="w-full">
                   <div className="rounded-xl py-1 md:rounded-3xl">
-                    {LatexPreview(_child)}
+                    {<Latex body={value.body ?? ''} displayMode />}
                   </div>
                 </Dialog.Trigger>
               </motion.div>
@@ -71,7 +66,7 @@ export function PortableTextLatex({
                         }}
                       >
                         <div className="rounded-xl py-1 md:rounded-3xl">
-                          {LatexPreview(_child)}
+                          {<Latex body={value.body ?? ''} displayMode />}
                         </div>
                       </motion.div>
                     </div>

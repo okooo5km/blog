@@ -3,12 +3,11 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 import { env } from '~/env.mjs'
 import { getIP } from '~/lib/ip'
-import { ratelimit } from '~/lib/redis'
+import { ratelimit } from '~/lib/ratelimit'
 
 const width = 1200
 const height = 750
 
-export const runtime = 'edge'
 export const revalidate = 3600 // 1 hour
 
 export async function GET(req: NextRequest) {

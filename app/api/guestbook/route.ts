@@ -14,7 +14,7 @@ import { env } from '~/env.mjs'
 import { url } from '~/lib'
 import { getIP } from '~/lib/ip'
 import { resend } from '~/lib/mail'
-import { ratelimit } from '~/lib/redis'
+import { ratelimit } from '~/lib/ratelimit'
 
 function getKey(id?: string) {
   return `guestbook${id ? `:${id}` : ''}`
@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
     const notifiedEmails = new Set<string>()
 
     // 发送邮件通知
-    if (env.RESEND_API_KEY) {
+    if (env.RESEND_API_KEY && env.NODE_ENV === 'production' && env.APP_ENV === 'production') {
       // Reply notification: notify parent message author
       if (parentAuthorUserId && parentAuthorUserId !== user.id) {
           try {

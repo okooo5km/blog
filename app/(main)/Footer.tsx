@@ -1,16 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 
-import { CursorClickIcon, UsersIcon } from '~/assets'
 import { PeekabooLink } from '~/components/links/PeekabooLink'
 import { Container } from '~/components/ui/Container'
-import { kvKeys } from '~/config/kv'
 import { navigationItems } from '~/config/nav'
-import { env } from '~/env.mjs'
-import { prettifyNumber } from '~/lib/math'
-import { redis } from '~/lib/redis'
 
 import { FooterSponsorLinks } from './FooterSponsorLinks'
+import { VisitorStats } from './VisitorStats'
 
 function NavLink({
   href,
@@ -41,72 +37,7 @@ function Links() {
   )
 }
 
-async function TotalPageViews() {
-  let views: number
-  if (env.VERCEL_ENV === 'production') {
-    views = await redis.incr(kvKeys.totalPageViews)
-  } else {
-    views = 345678
-  }
-
-  return (
-    <span className="flex items-center justify-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 md:justify-start">
-      <UsersIcon className="h-4 w-4" />
-      <span title={`${Intl.NumberFormat('en-US').format(views)}次浏览`}>
-        总浏览量&nbsp;
-        <span className="font-medium">{prettifyNumber(views, true)}</span>
-      </span>
-    </span>
-  )
-}
-
-type VisitorGeolocation = {
-  country: string
-  city?: string
-  flag: string
-}
-async function LastVisitorInfo() {
-  let lastVisitor: VisitorGeolocation | undefined = undefined
-  if (env.VERCEL_ENV === 'production') {
-    const [lv, cv] = await redis.mget<VisitorGeolocation[]>(
-      kvKeys.lastVisitor,
-      kvKeys.currentVisitor
-    )
-    lastVisitor = lv
-    await redis.set(kvKeys.lastVisitor, cv)
-  }
-
-  if (!lastVisitor) {
-    lastVisitor = {
-      country: 'US',
-      flag: '🇺🇸',
-    }
-  }
-
-  let city = lastVisitor.city
-  if (city) {
-    try {
-      city = decodeURIComponent(city)
-    } catch {
-      // keep raw value if it's not valid percent-encoding
-    }
-  }
-
-  return (
-    <span className="flex items-center justify-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 md:justify-start">
-      <CursorClickIcon className="h-4 w-4" />
-      <span>
-        最近访客来自&nbsp;
-        {[city, lastVisitor.country].filter(Boolean).join(', ')}
-      </span>
-      <span className="font-medium">{lastVisitor.flag}</span>
-    </span>
-  )
-}
-
-export async function Footer() {
-  await Promise.resolve()
-
+export function Footer() {
   return (
     <footer className="mt-32">
       <Container.Outer>
@@ -125,17 +56,7 @@ export async function Footer() {
           </Container.Inner>
           <Container.Inner className="mt-6">
             <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-              <div className="flex flex-col items-center justify-start gap-2 sm:flex-row">
-                <React.Suspense>
-                  <TotalPageViews />
-                </React.Suspense>
-                <span className="hidden text-xs text-zinc-500 dark:text-zinc-400 sm:inline">
-                  ・
-                </span>
-                <React.Suspense>
-                  <LastVisitorInfo />
-                </React.Suspense>
-              </div>
+              <VisitorStats />
               <FooterSponsorLinks />
             </div>
           </Container.Inner>

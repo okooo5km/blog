@@ -1,5 +1,4 @@
 import { clerkClient, currentUser } from '@clerk/nextjs/server'
-import { Ratelimit } from '@upstash/ratelimit'
 import { asc, eq } from 'drizzle-orm'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -18,14 +17,10 @@ import { env } from '~/env.mjs'
 import { url } from '~/lib'
 import { getIP } from '~/lib/ip'
 import { resend } from '~/lib/mail'
-import { redis } from '~/lib/redis'
+import { createRateLimit } from '~/lib/ratelimit'
 import { client } from '~/sanity/lib/client'
 
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, '10 s'),
-  analytics: true,
-})
+const ratelimit = createRateLimit('RATE_COMMENTS')
 
 function getKey(id: string) {
   return `comments:${id}`
@@ -128,7 +123,7 @@ export async function POST(req: NextRequest, props: Params) {
     }
 
     // 如果是生产环境
-    if (env.NODE_ENV === 'production') {
+    if (env.NODE_ENV === 'production' && env.APP_ENV === 'production') {
       // 如果是回复评论
       if (parentId) {
         const [parentUserFromDb] = await db

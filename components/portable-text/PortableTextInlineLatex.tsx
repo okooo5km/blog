@@ -1,7 +1,8 @@
 'use client'
 
 import { type PortableTextComponentProps } from '@portabletext/react'
-import { LatexPreview, type LatexPreviewProps } from 'sanity-plugin-latex-input'
+
+import { Latex } from '~/components/Latex'
 
 export function PortableTextInlineLatex({
   value,
@@ -10,9 +11,5 @@ export function PortableTextInlineLatex({
   _type: string
   body?: string
 }>) {
-  const _child: LatexPreviewProps = {
-    body: value.body?.toString() ?? '',
-    layout: 'inline',
-  }
-  return LatexPreview(_child)
+  return <Latex body={value.body ?? ''} />
 }

@@ -1,0 +1,5 @@
+Production guestbook, self reply, paragraph comment and reaction persisted; exact test fixtures removed.
+comments: all 32 original rows unchanged; 32 current rows.
+guestbook: all 29 original rows unchanged; 29 current rows.
+subscribers: all 57 original rows unchanged; 57 current rows.
+newsletters: all 4 original rows unchanged; 4 current rows.

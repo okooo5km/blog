@@ -12,6 +12,7 @@ import React from 'react'
 import { useSnapshot } from 'valtio'
 
 import { UTurnLeftIcon } from '~/assets'
+import { ClientOnly } from '~/components/ClientOnly'
 import { CommentMarkdown } from '~/components/CommentMarkdown'
 import { ElegantTooltip } from '~/components/ui/Tooltip'
 import { type GuestbookDto } from '~/db/dto/guestbook.dto'
@@ -152,7 +153,7 @@ function Message({
             >
               {dayjs(message.createdAt).locale('zh-cn').fromNow()}
             </time>
-            <SignedIn>
+            <ClientOnly><SignedIn>
               <ElegantTooltip content="回复">
                 <button
                   type="button"
@@ -162,7 +163,7 @@ function Message({
                   <UTurnLeftIcon className="h-3.5 w-3.5 text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300" />
                 </button>
               </ElegantTooltip>
-            </SignedIn>
+            </SignedIn></ClientOnly>
           </div>
         </div>
         <div className="comment__message -mt-4 mb-1 pl-[3.25rem] text-sm">

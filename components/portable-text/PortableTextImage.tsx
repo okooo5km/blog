@@ -66,8 +66,7 @@ export function PortableTextImage({
                       hasLabel ? 'rounded-xl' : 'rounded-xl md:rounded-3xl'
                     )}
                     alt={value.alt || ''}
-                    fetchPriority="high"
-                    unoptimized
+                    sizes="(max-width: 768px) 100vw, 672px"
                   />
                 </Dialog.Trigger>
               </motion.div>

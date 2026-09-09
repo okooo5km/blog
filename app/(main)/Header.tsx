@@ -26,9 +26,9 @@ import {
   UserArrowLeftIcon,
 } from '~/assets'
 import { Avatar } from '~/components/Avatar'
+import { ClientOnly } from '~/components/ClientOnly'
 import { Container } from '~/components/ui/Container'
 import { Tooltip } from '~/components/ui/Tooltip'
-import { url } from '~/lib'
 import { clamp } from '~/lib/math'
 export function Header() {
   const isHomePage = usePathname() === '/'
@@ -275,7 +275,7 @@ export function Header() {
                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
               >
-                <UserInfo />
+                <ClientOnly><UserInfo /></ClientOnly>
                 <div className="pointer-events-auto">
                   <ThemeSwitcher />
                 </div>
@@ -337,7 +337,7 @@ function UserInfo() {
           exit={{ opacity: 0, x: 25 }}
         >
           <UserButton
-            afterSignOutUrl={url(pathname).href}
+            afterSignOutUrl={pathname}
             appearance={{
               elements: {
                 avatarBox: 'w-9 h-9 ring-2 ring-white/20',
@@ -360,7 +360,7 @@ function UserInfo() {
         >
           <Tooltip.Provider disableHoverableContent>
             <Tooltip.Root open={tooltipOpen} onOpenChange={setTooltipOpen}>
-              <SignInButton mode="modal" forceRedirectUrl={url(pathname).href}>
+              <SignInButton mode="modal" forceRedirectUrl={pathname}>
                 <Tooltip.Trigger asChild>
                   <button
                     type="button"

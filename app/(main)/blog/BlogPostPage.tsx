@@ -24,6 +24,7 @@ import { Prose } from '~/components/Prose'
 import { Button } from '~/components/ui/Button'
 import { Container } from '~/components/ui/Container'
 import { prettifyNumber } from '~/lib/math'
+import { useVisit } from '~/lib/visit'
 import { type PostDetail } from '~/sanity/schemas/post'
 
 import { BlogPostCard } from './BlogPostCard'
@@ -40,6 +41,8 @@ export function BlogPostPage({
   reactions?: number[]
   relatedViews: number[]
 }) {
+  const { data: visit } = useVisit()
+  const currentViews = visit?.postViews ?? views
   return (
     <Container className="mt-16 lg:mt-32">
       <div className="w-full md:flex md:justify-between xl:relative">
@@ -61,7 +64,7 @@ export function BlogPostPage({
             <header className="relative flex flex-col items-center pb-5 after:absolute after:-bottom-1 after:block after:h-px after:w-full after:rounded after:bg-gradient-to-r after:from-zinc-400/20 after:via-zinc-200/10 after:to-transparent dark:after:from-zinc-600/20 dark:after:via-zinc-700/10">
               <motion.div
                 className="relative mb-8 aspect-[240/135] w-full md:mb-12"
-                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                initial={false}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{
                   duration: 0.35,
@@ -86,7 +89,8 @@ export function BlogPostPage({
                   className="select-none rounded-2xl ring-1 ring-zinc-900/5 transition dark:ring-0 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20 md:rounded-3xl"
                   placeholder="blur"
                   blurDataURL={post.mainImage.asset.lqip}
-                  unoptimized
+                  priority
+                  sizes="(max-width: 768px) 100vw, 672px"
                   fill
                 />
               </motion.div>
@@ -160,10 +164,10 @@ export function BlogPostPage({
               >
                 <span
                   className="inline-flex items-center space-x-1.5"
-                  title={views?.toString()}
+                  title={currentViews?.toString()}
                 >
                   <CursorClickIcon />
-                  <span>{prettifyNumber(views ?? 0, true)}次点击</span>
+                  <span>{prettifyNumber(currentViews ?? 0, true)}次点击</span>
                 </span>
 
                 <span className="inline-flex items-center space-x-1.5">

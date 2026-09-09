@@ -26,7 +26,13 @@ export const RichLink = React.forwardRef<HTMLAnchorElement, RichLinkProps>(
       )
     }
 
-    const hrefHost = new URL(href).host
+    let hrefHost: string
+    try {
+      hrefHost = new URL(href).host
+    } catch {
+      // A malformed URL in historical content must not crash the whole article.
+      return <span className={className}>{children}</span>
+    }
     const faviconUrl = favicon ? `/api/favicon?url=${hrefHost}` : null
 
     return (

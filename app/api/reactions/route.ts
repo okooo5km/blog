@@ -1,31 +1,20 @@
-import { Ratelimit } from '@upstash/ratelimit'
-import { revalidateTag } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 
 import { getIP } from '~/lib/ip'
-import { redis } from '~/lib/redis'
+import { createRateLimit } from '~/lib/ratelimit'
+import { storage } from '~/lib/storage'
 
-export const runtime = 'edge'
 
 function getKey(id: string) {
   return `reactions:${id}`
 }
 
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(30, '10 s'),
-  analytics: true,
-})
+const ratelimit = createRateLimit('RATE_GENERAL')
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id')
-  if (!id) return new Response('Missing id', { status: 400 })
-
-  const value = await redis.get<number[]>(`reactions:${id}`)
-  if (!value) {
-    await redis.set(getKey(id), [0, 0, 0, 0])
-  }
+  if (!id || id.length > 200) return new Response('Missing or invalid id', { status: 400 })
 
   const { success } = await ratelimit.limit(getKey(id) + `_${getIP(req)}`)
   if (!success) {
@@ -34,14 +23,15 @@ export async function GET(req: NextRequest) {
     })
   }
 
-  return NextResponse.json(value ?? [0, 0, 0, 0])
+  const value = await storage.get<number[]>(getKey(id))
+  return NextResponse.json(value ?? [0, 0, 0, 0], { headers: { 'Cache-Control': 'private, no-store' } })
 }
 
 export async function PATCH(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id')
   const index = searchParams.get('index')
-  if (!id || !index || !(parseInt(index) >= 0 && parseInt(index) < 4)) {
+  if (!id || id.length > 200 || !index || !/^[0-3]$/.test(index)) {
     return new Response('Missing id or index', { status: 400 })
   }
 
@@ -54,16 +44,8 @@ export async function PATCH(req: NextRequest) {
     })
   }
 
-  let current = await redis.get<number[]>(key)
-  if (!current) {
-    current = [0, 0, 0, 0]
-  }
-  // increment the array value at the index
-  current[parseInt(index)] += 1
+  const current = await storage.incrementReaction(key, Number(index))
 
-  await redis.set(key, current)
-
-  revalidateTag(key)
 
   return NextResponse.json({
     data: current,

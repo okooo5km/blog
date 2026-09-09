@@ -3,7 +3,6 @@
 
 import { type PortableTextComponentProps } from '@portabletext/react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { Card } from '@sanity/ui'
 import { clsxm } from '@zolplay/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
@@ -25,7 +24,7 @@ export function PortableTextOtherImage({
   )
 
   if (!value.url) {
-    return <Card padding={4}>Missing Video URL</Card>
+    return <div className="p-4">Missing Video URL</div>
   }
 
   return (

@@ -1,17 +1,12 @@
-import { Ratelimit } from '@upstash/ratelimit'
 import { type NextRequest, NextResponse } from 'next/server'
 
 import { getIP } from '~/lib/ip'
-import { redis } from '~/lib/redis'
+import { createRateLimit } from '~/lib/ratelimit'
+import { storage } from '~/lib/storage'
 
-export const runtime = 'edge'
 
 export async function GET(req: NextRequest) {
-  const ratelimit = new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(5, '5 s'),
-    analytics: true,
-  })
+  const ratelimit = createRateLimit('RATE_ACTIVITY')
   const { success } = await ratelimit.limit('activity:app' + `_${getIP(req)}`)
   if (!success) {
     return new Response('Too Many Requests', {
@@ -19,7 +14,7 @@ export async function GET(req: NextRequest) {
     })
   }
 
-  const app = await redis.get('activity:app')
+  const app = await storage.get('activity:app')
 
   return NextResponse.json({
     app,

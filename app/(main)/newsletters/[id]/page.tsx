@@ -7,6 +7,8 @@ import { Container } from '~/components/ui/Container'
 import { db } from '~/db'
 import { newsletters } from '~/db/schema'
 
+export const dynamic = 'force-dynamic'
+
 async function getNewsletter(id: string) {
   const [newsletter] = await db
     .select()

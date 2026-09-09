@@ -31,7 +31,7 @@ export default function UnsubscribePage() {
         }),
       })
 
-      const data = await response.json()
+      const data: { error?: string; status?: string } = JSON.parse(await response.text())
 
       if (!response.ok) {
         setStatus('error')

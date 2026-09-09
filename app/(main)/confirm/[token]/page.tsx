@@ -5,6 +5,8 @@ import { Container } from '~/components/ui/Container'
 import { db } from '~/db'
 import { subscribers } from '~/db/schema'
 
+export const dynamic = 'force-dynamic'
+
 import { SubbedCelebration } from './SubbedCelebration'
 
 export const metadata = {

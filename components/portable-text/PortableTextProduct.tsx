@@ -3,7 +3,6 @@
 
 import { type PortableTextComponentProps } from '@portabletext/react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { Card } from '@sanity/ui'
 import { clsxm } from '@zolplay/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, Star, Tag } from 'lucide-react'
@@ -43,7 +42,7 @@ export function PortableTextProduct({
   const rating = value.rating || 4.5
 
   if (!value.link) {
-    return <Card padding={4}>Missing Image URL</Card>
+    return <div className="p-4">Missing Image URL</div>
   }
 
   return (

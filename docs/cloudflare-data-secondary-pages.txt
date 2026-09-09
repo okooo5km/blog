@@ -1,0 +1,12 @@
+200 /about
+200 /ama
+200 /blocked
+200 /unsubscribe
+200 /newsletters/1
+200 /newsletters/2
+200 /newsletters/3
+200 /newsletters/4
+200 /confirm/migration-invalid-token-20260910
+200 /sign-in
+200 /sign-up
+200 /studio

@@ -1,0 +1,25 @@
+
+> 5km.studio@0.1.0 smoke:deployment /Users/5km/Dev/Web/blog
+> node scripts/smoke-deployment.mjs http://localhost:3015
+
+200 / 46ms
+200 image optimizer
+200 /blog 14ms
+200 /blog/page/2 1803ms
+308 /blog/page/1 28ms
+404 /blog/page/0 28ms
+404 /blog/page/999999 28ms
+200 /blog/5km-littlebox-illustrations 793ms
+200 /blog/cloudflare-migration-nonexistent-post 501ms
+200 /projects 12ms
+200 /guestbook 21ms
+200 /feed.xml 11ms
+200 /rss 8ms
+200 /sitemap.xml 11ms
+200 /api/guestbook 7ms
+401 /api/guestbook/users 7ms
+400 /api/reactions 6ms
+404 /admin (anonymous access denied)
+400 /api/visit (invalid request rejected)
+403 /api/visit (invalid request rejected)
+Deployment smoke checks passed. No comments, subscriptions, or emails were created.

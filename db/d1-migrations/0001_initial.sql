@@ -1,0 +1,10 @@
+CREATE TABLE comments (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT NOT NULL, user_info TEXT, post_id TEXT NOT NULL, parent_id INTEGER, body TEXT, created_at INTEGER DEFAULT (unixepoch()*1000), updated_at INTEGER DEFAULT (unixepoch()*1000));
+CREATE INDEX post_idx ON comments(post_id);
+CREATE INDEX comments_created_idx ON comments(created_at);
+CREATE TABLE guestbook (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT NOT NULL, user_info TEXT, message TEXT NOT NULL, parent_id INTEGER, created_at INTEGER DEFAULT (unixepoch()*1000), updated_at INTEGER DEFAULT (unixepoch()*1000));
+CREATE INDEX guestbook_created_idx ON guestbook(created_at);
+CREATE TABLE subscribers (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, token TEXT, subscribed_at INTEGER, unsubscribed_at INTEGER, updated_at INTEGER DEFAULT (unixepoch()*1000));
+CREATE INDEX subscriber_email_idx ON subscribers(email);
+CREATE INDEX subscriber_token_idx ON subscribers(token);
+CREATE TABLE newsletters (id INTEGER PRIMARY KEY AUTOINCREMENT, subject TEXT, body TEXT, sent_at INTEGER, created_at INTEGER DEFAULT (unixepoch()*1000), updated_at INTEGER DEFAULT (unixepoch()*1000));
+CREATE TABLE blog_state (key TEXT PRIMARY KEY, value TEXT NOT NULL CHECK(json_valid(value)), expires_at INTEGER);

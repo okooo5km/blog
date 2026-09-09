@@ -1,4 +1,3 @@
-import { Ratelimit } from '@upstash/ratelimit'
 import { eq } from 'drizzle-orm'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -11,17 +10,13 @@ import { env } from '~/env.mjs'
 import { url } from '~/lib'
 import { getIP } from '~/lib/ip'
 import { resend } from '~/lib/mail'
-import { redis } from '~/lib/redis'
+import { createRateLimit } from '~/lib/ratelimit'
 
 const newsletterFormSchema = z.object({
   email: z.string().email().min(1),
 })
 
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(1, '10 s'),
-  analytics: true,
-})
+const ratelimit = createRateLimit('RATE_NEWSLETTER')
 
 export async function POST(req: NextRequest) {
   if (env.NODE_ENV === 'production') {
@@ -32,7 +27,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { data } = await req.json()
+    const { data } = JSON.parse(await req.text())
     const parsed = newsletterFormSchema.parse(data)
 
     const [subscriber] = await db
@@ -69,7 +64,7 @@ export async function POST(req: NextRequest) {
     // 新订阅者，生成 token 并发送确认邮件
     const token = crypto.randomUUID()
 
-    if (env.NODE_ENV === 'production') {
+    if (env.NODE_ENV === 'production' && env.APP_ENV === 'production') {
       await resend.emails.send({
         from: emailConfig.from,
         to: parsed.email,

@@ -1,4 +1,3 @@
-import { Ratelimit } from '@upstash/ratelimit'
 import { eq } from 'drizzle-orm'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -7,17 +6,13 @@ import { db } from '~/db'
 import { subscribers } from '~/db/schema'
 import { env } from '~/env.mjs'
 import { getIP } from '~/lib/ip'
-import { redis } from '~/lib/redis'
+import { createRateLimit } from '~/lib/ratelimit'
 
 const unsubscribeSchema = z.object({
   email: z.string().email().min(1),
 })
 
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(1, '10 s'),
-  analytics: true,
-})
+const ratelimit = createRateLimit('RATE_NEWSLETTER')
 
 export async function POST(req: NextRequest) {
   // 生产环境进行速率限制
@@ -32,7 +27,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { data } = await req.json()
+    const { data } = JSON.parse(await req.text())
     const parsed = unsubscribeSchema.parse(data)
 
     // 查找订阅记录

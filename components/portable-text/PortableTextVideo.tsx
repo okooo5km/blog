@@ -2,7 +2,6 @@
 
 import { type PortableTextComponentProps } from '@portabletext/react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { Card } from '@sanity/ui'
 import { clsxm } from '@zolplay/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
@@ -26,7 +25,7 @@ export function PortableTextVideo({
   )
 
   if (!value.url) {
-    return <Card padding={4}>Missing Video URL</Card>
+    return <div className="p-4">Missing Video URL</div>
   }
 
   return (
@@ -47,6 +46,7 @@ export function PortableTextVideo({
               <motion.div className="relative">
                 <Dialog.Trigger className="relative z-20 w-full cursor-zoom-in rounded-xl pt-[56.25%] dark:brightness-75 dark:transition-[filter] dark:hover:brightness-100">
                   <iframe
+                    loading="lazy"
                     style={{
                       height: '100%',
                       width: '100%',
@@ -104,6 +104,7 @@ export function PortableTextVideo({
                         }}
                       >
                         <iframe
+                          loading="lazy"
                           style={{
                             height: '100%',
                             width: '100%',

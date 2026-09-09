@@ -3,17 +3,13 @@ import { notFound } from 'next/navigation'
 
 import { BlogPostPage } from '~/app/(main)/blog/BlogPostPage'
 import { kvKeys } from '~/config/kv'
-import { env } from '~/env.mjs'
-import { url } from '~/lib'
-import { redis } from '~/lib/redis'
+import { getPostStatistics } from '~/lib/post-statistics'
 import { getBlogPost } from '~/sanity/queries'
 
-export const generateMetadata = async (
-  props: {
-    params: Promise<{ slug: string }>
-  }
-) => {
-  const params = await props.params;
+export const generateMetadata = async (props: {
+  params: Promise<{ slug: string }>
+}) => {
+  const params = await props.params
   const post = await getBlogPost(params.slug)
   if (!post) {
     notFound()
@@ -49,64 +45,48 @@ export const generateMetadata = async (
   } satisfies Metadata
 }
 
-export default async function BlogPage(
-  props: {
-    params: Promise<{ slug: string }>
-  }
-) {
-  const params = await props.params;
+export default async function BlogPage(props: {
+  params: Promise<{ slug: string }>
+}) {
+  const params = await props.params
   const post = await getBlogPost(params.slug)
   if (!post) {
     notFound()
   }
 
-  let views: number
-  if (env.VERCEL_ENV === 'production') {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    views = await redis.incr(kvKeys.postViews(post._id))
-  } else {
-    views = 30578
-  }
-
-  let reactions: number[] = []
+  const related = post.related ?? []
+  const keys = [
+    kvKeys.postViews(post._id),
+    `reactions:${post._id}`,
+    ...related.map(({ _id }) => kvKeys.postViews(_id)),
+  ]
+  let values: unknown[] = []
   try {
-    if (env.VERCEL_ENV === 'production') {
-      const res = await fetch(url(`/api/reactions?id=${post._id}`), {
-        next: {
-          tags: [`reactions:${post._id}`],
-        },
-      })
-      const data = await res.json()
-      if (Array.isArray(data)) {
-        reactions = data
-      }
-    } else {
-      reactions = Array.from({ length: 4 }, () =>
-        Math.floor(Math.random() * 50000)
-      )
-    }
+    values = await getPostStatistics(keys)
   } catch (error) {
-    console.error(error)
+    console.error('Post statistics unavailable', error)
   }
-
-  let relatedViews: number[] = []
-  if (typeof post.related !== 'undefined' && post.related.length > 0) {
-    if (env.VERCEL_ENV === 'development') {
-      relatedViews = post.related.map(() => Math.floor(Math.random() * 1000))
-    } else {
-      const postIdKeys = post.related.map(({ _id }) => kvKeys.postViews(_id))
-      relatedViews = await redis.mget<number[]>(...postIdKeys)
-    }
-  }
+  const views = typeof values[0] === 'number' ? values[0] : 0
+  const reactions = Array.isArray(values[1])
+    ? (values[1] as number[])
+    : undefined
+  const relatedViews = related.map((_, index) =>
+    typeof values[index + 2] === 'number' ? (values[index + 2] as number) : 0
+  )
 
   return (
     <BlogPostPage
       post={post}
       views={views}
       relatedViews={relatedViews}
-      reactions={reactions.length > 0 ? reactions : undefined}
+      reactions={reactions}
     />
   )
 }
 
 export const revalidate = 60
+
+// Generate article pages on first visit and refresh them through ISR.
+export function generateStaticParams() {
+  return []
+}

@@ -1,5 +1,6 @@
 'use client'
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   motion,
   type MotionValue,
@@ -36,26 +37,27 @@ export function BlogReactions({
     },
     [mouseY]
   )
-  const [cachedReactions, setCachedReactions] = React.useState(
-    reactions ?? [0, 0, 0, 0]
-  )
-  const onClick = React.useCallback(
-    async (index: number) => {
-      // Optimistic update
-      setCachedReactions((prev) => {
-        const next = [...prev]
-        next[index]++
-        return next
-      })
-
-      const res = await fetch(`/api/reactions?id=${_id}&index=${index}`, {
-        method: 'PATCH',
-      })
-      const { data } = (await res.json()) as { data: number[] }
-      setCachedReactions(data)
+  const queryClient = useQueryClient()
+  const queryKey = ['reactions', _id]
+  const { data: cachedReactions = [0, 0, 0, 0] } = useQuery({
+    queryKey,
+    queryFn: async (): Promise<number[]> => {
+      const response = await fetch(`/api/reactions?id=${encodeURIComponent(_id)}`)
+      if (!response.ok) throw new Error('无法读取点赞数量')
+      return JSON.parse(await response.text())
     },
-    [_id]
-  )
+    placeholderData: reactions,
+    retry: false,
+    refetchOnWindowFocus: false,
+  })
+  const mutation = useMutation({
+    mutationFn: async (index: number): Promise<number[]> => {
+      const response = await fetch(`/api/reactions?id=${encodeURIComponent(_id)}&index=${index}`, { method: 'PATCH' })
+      if (!response.ok) throw new Error(response.status === 429 ? '操作太快，请稍后再试' : '点赞失败，请重试')
+      return JSON.parse(await response.text()).data
+    },
+    onSuccess: data => queryClient.setQueryData(queryKey, data),
+  })
 
   return (
     <motion.div
@@ -86,9 +88,11 @@ export function BlogReactions({
           y={mouseY}
           image={`/reactions/${reaction}.png`}
           count={cachedReactions[idx]}
-          onClick={() => onClick(idx)}
+          onClick={() => mutation.mutate(idx)}
+          disabled={mutation.isPending}
         />
       ))}
+      {mutation.isError && <span role="status" className="text-xs">{mutation.error.message}</span>}
     </motion.div>
   )
 }
@@ -98,10 +102,12 @@ function ReactIcon({
   image,
   count = 0,
   onClick,
+  disabled,
 }: {
   y: MotionValue
   image: string
   count?: number
+  disabled?: boolean
   onClick?: () => void
 }) {
   const ref = React.useRef<HTMLButtonElement>(null)
@@ -129,6 +135,7 @@ function ReactIcon({
         scale: 1.3,
       }}
       onClick={onClick}
+      disabled={disabled}
     >
       <Image
         src={image}

@@ -5,9 +5,7 @@ import React from 'react'
 import { db } from '~/db'
 
 export default async function AdminPage() {
-  const {
-    rows: [count],
-  } = await db.execute<{
+  const [count] = await db.all<{
     comments: number
     subscribers: number
     guestbook: number

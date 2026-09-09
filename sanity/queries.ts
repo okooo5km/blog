@@ -1,6 +1,6 @@
 import { groq } from 'next-sanity'
+import { cache } from 'react'
 
-import { getDate } from '~/lib/date'
 import { client } from '~/sanity/lib/client'
 import { type Post, type PostDetail } from '~/sanity/schemas/post'
 import { type Project } from '~/sanity/schemas/project'
@@ -8,14 +8,18 @@ import { type Project } from '~/sanity/schemas/project'
 export const getAllLatestBlogPostSlugsQuery = () =>
   groq`
   *[_type == "post" && !(_id in path("drafts.**"))
-  && publishedAt <="${getDate().toISOString()}"
+  && publishedAt <=now()
   && defined(slug.current)] | order(publishedAt desc).slug.current
   `
 
 export const getAllLatestBlogPostSlugs = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return client.fetch<string[]>(getAllLatestBlogPostSlugsQuery())
+  return client.fetch<string[]>(
+    getAllLatestBlogPostSlugsQuery(),
+    {},
+    { next: { revalidate: 300 } }
+  )
 }
 
 type GetBlogPostsOptions = {
@@ -25,12 +29,13 @@ type GetBlogPostsOptions = {
 }
 export const getLatestBlogPostsQuery = ({
   limit = 5,
+  offset = 0,
   forDisplay = true,
 }: GetBlogPostsOptions) =>
   groq`
-  *[_type == "post" && !(_id in path("drafts.**")) && publishedAt <= "${getDate().toISOString()}"
+  *[_type == "post" && !(_id in path("drafts.**")) && publishedAt <= now()
   && defined(slug.current)]
-| order(publishedAt desc)[0...${limit}] {
+| order(publishedAt desc)[${offset}...${offset + limit}] {
     _id,
     title,
     "slug": slug.current,
@@ -56,7 +61,7 @@ export const getLatestBlogPostsWithBodyQuery = ({
   forDisplay = true,
 }: GetBlogPostsOptions) =>
   groq`
-  *[_type == "post" && !(_id in path("drafts.**")) && publishedAt <= "${getDate().toISOString()}"
+  *[_type == "post" && !(_id in path("drafts.**")) && publishedAt <= now()
   && defined(slug.current)]
 | order(publishedAt desc)[0...${limit}] {
     _id,
@@ -91,12 +96,20 @@ export const getLatestBlogPostsWithBodyQuery = ({
 export const getLatestBlogPosts = (options: GetBlogPostsOptions) =>
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  client.fetch<Post[] | null>(getLatestBlogPostsQuery(options))
+  client.fetch<Post[] | null>(
+    getLatestBlogPostsQuery(options),
+    {},
+    { next: { revalidate: 300 } }
+  )
 
 export const getLatestBlogPostsWithBody = (options: GetBlogPostsOptions) =>
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  client.fetch<Post[] | null>(getLatestBlogPostsWithBodyQuery(options))
+  client.fetch<Post[] | null>(
+    getLatestBlogPostsWithBodyQuery(options),
+    {},
+    { next: { revalidate: 300 } }
+  )
 
 export const getBlogPostQuery = groq`
   *[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
@@ -142,12 +155,17 @@ export const getBlogPostQuery = groq`
       },
     }
   }`
-export const getBlogPost = (slug: string) =>
+export const getBlogPost = cache((slug: string) =>
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  client.fetch<PostDetail | undefined, { slug: string }>(getBlogPostQuery, {
-    slug,
-  })
+  client.fetch<PostDetail | undefined, { slug: string }>(
+    getBlogPostQuery,
+    {
+      slug,
+    },
+    { next: { revalidate: 300 } }
+  )
+)
 
 export const getSettingsQuery = () =>
   groq`
@@ -182,4 +200,4 @@ export const getSettings = () =>
           end?: string
         }[]
       | null
-  }>(getSettingsQuery())
+  }>(getSettingsQuery(), {}, { next: { revalidate: 300 } })
