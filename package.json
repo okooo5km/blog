@@ -16,7 +16,9 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf:typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "smoke:deployment": "node scripts/smoke-deployment.mjs",
-    "db:migrate:remote": "wrangler d1 migrations apply BLOG_DB --remote"
+    "db:migrate:remote": "wrangler d1 migrations apply BLOG_DB --remote",
+    "build:ci": "node scripts/cloudflare-ci.mjs build",
+    "deploy:ci": "node scripts/cloudflare-ci.mjs deploy"
   },
   "dependencies": {
     "@clerk/localizations": "^3.35.3",
@@ -142,5 +144,9 @@
       "sharp",
       "workerd"
     ]
+  },
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22.14.0"
   }
 }

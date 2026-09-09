@@ -1,0 +1,8 @@
+{
+  "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_dG9sZXJhbnQtYmlzb24tMjguY2xlcmsuYWNjb3VudHMuZGV2JA",
+  "NEXT_PUBLIC_SANITY_DATASET": "production",
+  "NEXT_PUBLIC_SANITY_PROJECT_ID": "luyjr5r1",
+  "NEXT_PUBLIC_SANITY_USE_CDN": "false",
+  "NEXT_PUBLIC_SITE_EMAIL_FROM": "hi@5km.studio",
+  "NEXT_PUBLIC_SITE_URL": "https://5km.studio"
+}

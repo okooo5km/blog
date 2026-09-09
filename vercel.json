@@ -2,5 +2,8 @@
   "buildCommand": "pnpm turbo build",
   "github": {
     "silent": true
+  },
+  "git": {
+    "deploymentEnabled": false
   }
 }

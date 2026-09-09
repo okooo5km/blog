@@ -16,7 +16,7 @@ import NewReplyCommentEmail from '~/emails/NewReplyComment'
 import { env } from '~/env.mjs'
 import { url } from '~/lib'
 import { getIP } from '~/lib/ip'
-import { resend } from '~/lib/mail'
+import { getResend } from '~/lib/mail'
 import { createRateLimit } from '~/lib/ratelimit'
 import { client } from '~/sanity/lib/client'
 
@@ -140,7 +140,7 @@ export async function POST(req: NextRequest, props: Params) {
             (emailAddress) => emailAddress.id === primaryEmailAddressId
           )
           if (primaryEmailAddress) {
-            await resend.emails.send({
+            await getResend().emails.send({
               from: emailConfig.from,
               to: primaryEmailAddress.emailAddress,
               subject: '👋 有人回复了你的评论',
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest, props: Params) {
       }
       // 如果是新评论（非回复），发送通知给站长
       else {
-        await resend.emails.send({
+        await getResend().emails.send({
           from: emailConfig.from,
           to: env.SITE_NOTIFICATION_EMAIL_TO,
           subject: '✨ 收到了新的评论',

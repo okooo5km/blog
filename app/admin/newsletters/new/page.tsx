@@ -10,7 +10,7 @@ import { db } from '~/db'
 import { newsletters, subscribers } from '~/db/schema'
 import NewslettersTemplate from '~/emails/NewslettersTemplate'
 import { env } from '~/env.mjs'
-import { resend } from '~/lib/mail'
+import { getResend } from '~/lib/mail'
 
 extendDateTime({
   timezone: true,
@@ -57,7 +57,7 @@ export default function CreateNewsletterPage() {
 
     try {
       // 发送 newsletter
-      await resend.emails.send({
+      await getResend().emails.send({
         subject: data.subject,
         from: emailConfig.from,
         to: env.SITE_NOTIFICATION_EMAIL_TO ?? [],

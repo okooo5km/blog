@@ -13,7 +13,7 @@ import NewGuestbookReplyEmail from '~/emails/NewGuestbookReply'
 import { env } from '~/env.mjs'
 import { url } from '~/lib'
 import { getIP } from '~/lib/ip'
-import { resend } from '~/lib/mail'
+import { getResend } from '~/lib/mail'
 import { ratelimit } from '~/lib/ratelimit'
 
 function getKey(id?: string) {
@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
             const email = clerkUser.emailAddresses[0]?.emailAddress
             if (email) {
               notifiedEmails.add(email)
-              await resend.emails.send({
+              await getResend().emails.send({
                 from: emailConfig.from,
                 to: email,
                 subject: '👋 有人回复了你在留言墙的留言',
@@ -189,7 +189,7 @@ export async function POST(req: NextRequest) {
       if (mentionEmails.length > 0) {
         await Promise.all(
           mentionEmails.map((email) =>
-            resend.emails.send({
+            getResend().emails.send({
               from: emailConfig.from,
               to: email,
               subject:

@@ -9,7 +9,7 @@ import ConfirmSubscriptionEmail from '~/emails/ConfirmSubscription'
 import { env } from '~/env.mjs'
 import { url } from '~/lib'
 import { getIP } from '~/lib/ip'
-import { resend } from '~/lib/mail'
+import { getResend } from '~/lib/mail'
 import { createRateLimit } from '~/lib/ratelimit'
 
 const newsletterFormSchema = z.object({
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     const token = crypto.randomUUID()
 
     if (env.NODE_ENV === 'production' && env.APP_ENV === 'production') {
-      await resend.emails.send({
+      await getResend().emails.send({
         from: emailConfig.from,
         to: parsed.email,
         subject: '来自 5km studio 的订阅确认',
