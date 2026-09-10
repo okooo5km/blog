@@ -103,7 +103,6 @@ export function Headline() {
       >
         <SocialLink href="/twitter" aria-label="我的推特" platform="twitter" />
         <SocialLink href="/github" aria-label="我的 GitHub" platform="github" />
-        <SocialLink href="/tg" aria-label="我的 Telegram" platform="telegram" />
         <SocialLink
           href="/bilibili"
           aria-label="我的 Bilibili"
