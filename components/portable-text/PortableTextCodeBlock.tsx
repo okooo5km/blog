@@ -13,10 +13,11 @@ export function PortableTextCodeBlock({
   value,
 }: PortableTextComponentProps<{
   _key: string
-  language: string
+  language?: string
   code: string
   filename?: string
 }>) {
+  const language = value.language?.trim() || 'text'
   const [hasCopied, setHasCopied] = React.useState(false)
   const onClickCopy = React.useCallback(() => {
     navigator.clipboard
@@ -45,7 +46,7 @@ export function PortableTextCodeBlock({
         <div className="relative flex text-xs leading-6 text-slate-400">
           {Boolean(value.filename) && (
             <>
-              <div className="mt-2 flex flex-none items-center border-b border-t border-b-emerald-700 border-t-transparent px-4 py-1 font-medium text-emerald-700 dark:border-b-emerald-200 dark:text-emerald-200">
+              <div className="mt-2 flex min-w-0 items-center break-all border-b border-t border-b-emerald-700 border-t-transparent px-4 py-1 font-medium text-emerald-700 dark:border-b-emerald-200 dark:text-emerald-200">
                 {value.filename}
               </div>
               <div className="flex flex-auto overflow-hidden rounded-tr-3xl pt-2">
@@ -58,6 +59,7 @@ export function PortableTextCodeBlock({
               <ElegantTooltip content="复制">
                 <button
                   type="button"
+                  aria-label="复制代码"
                   className="text-zinc-400 hover:text-zinc-500 dark:text-zinc-500 dark:hover:text-zinc-400"
                   onClick={onClickCopy}
                 >
@@ -73,12 +75,12 @@ export function PortableTextCodeBlock({
         </div>
 
         <SyntaxHighlighter
-          language={value.language}
+          language={language}
           showLineNumbers
           useInlineStyles={false}
           codeTagProps={{
             style: { whiteSpace: 'pre' },
-            className: `language-${value.language}`,
+            className: `language-${language}`,
           }}
         >
           {value.code}

@@ -15,5 +15,10 @@ export function Latex({
     trust: false,
     output: 'htmlAndMathml',
   })
-  return <span dangerouslySetInnerHTML={{ __html: html }} />
+  return (
+    <span
+      className={displayMode ? 'block max-w-full overflow-x-auto' : undefined}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  )
 }

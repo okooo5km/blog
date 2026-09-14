@@ -7,7 +7,6 @@ import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata, Viewport } from 'next'
 
 import { ThemeProvider } from '~/app/(main)/ThemeProvider'
-import { url } from '~/lib'
 import { sansFont } from '~/lib/font'
 import { seo } from '~/lib/seo'
 
@@ -51,9 +50,8 @@ export const metadata: Metadata = {
     description: seo.description,
   },
   alternates: {
-    canonical: url('/'),
     types: {
-      'application/rss+xml': [{ url: 'rss', title: 'RSS 订阅' }],
+      'application/rss+xml': [{ url: '/feed.xml', title: 'RSS 订阅' }],
     },
   },
 }

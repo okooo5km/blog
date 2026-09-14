@@ -26,6 +26,13 @@ export const RichLink = React.forwardRef<HTMLAnchorElement, RichLinkProps>(
       )
     }
 
+    // Historical pasted URLs can contain spaces encoded into the hostname.
+    // Browsers and server URL parsers disagree on these; reject them consistently.
+    const authority = href.match(/^https?:\/\/([^/?#]*)/i)?.[1]
+    if (!authority || /[%\s]/.test(authority)) {
+      return <span className={className}>{children}</span>
+    }
+
     let hrefHost: string
     try {
       hrefHost = new URL(href).host
@@ -40,7 +47,7 @@ export const RichLink = React.forwardRef<HTMLAnchorElement, RichLinkProps>(
         ref={ref}
         href={href}
         className={clsxm(
-          'inline-flex place-items-baseline items-baseline gap-0.5 pr-0.5 text-[0.95em] leading-none',
+          'inline break-words pr-0.5 text-[0.95em] [overflow-wrap:anywhere]',
           className
         )}
         rel="noopener noreferrer"

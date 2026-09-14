@@ -22,8 +22,10 @@ async function getNewsletter(id: string) {
   return newsletter
 }
 
-export async function generateMetadata(props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
+export async function generateMetadata(props: {
+  params: Promise<{ id: string }>
+}) {
+  const params = await props.params
   const newsletter = await getNewsletter(params.id)
 
   const imageUrlRegex = /!\[[^\]]*\]\((.*?)\)/
@@ -35,6 +37,7 @@ export async function generateMetadata(props: { params: Promise<{ id: string }> 
   }
 
   return {
+    alternates: { canonical: `/newsletters/${newsletter.id}` },
     title: newsletter.subject,
     description: newsletter.subject,
     openGraph: {
@@ -54,12 +57,10 @@ export async function generateMetadata(props: { params: Promise<{ id: string }> 
   } satisfies Metadata
 }
 
-export default async function NewsletterRenderPage(
-  props: {
-    params: Promise<{ id: string }>
-  }
-) {
-  const params = await props.params;
+export default async function NewsletterRenderPage(props: {
+  params: Promise<{ id: string }>
+}) {
+  const params = await props.params
   const newsletter = await getNewsletter(params.id)
 
   if (!newsletter.body) {

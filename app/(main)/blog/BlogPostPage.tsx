@@ -1,8 +1,8 @@
 'use client'
 
-import { parseDateTime } from '@zolplay/utils'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import Balancer from 'react-wrap-balancer'
 
@@ -23,6 +23,7 @@ import { PostPortableText } from '~/components/PostPortableText'
 import { Prose } from '~/components/Prose'
 import { Button } from '~/components/ui/Button'
 import { Container } from '~/components/ui/Container'
+import { formatPostDate } from '~/lib/date'
 import { prettifyNumber } from '~/lib/math'
 import { useVisit } from '~/lib/visit'
 import { type PostDetail } from '~/sanity/schemas/post'
@@ -51,7 +52,7 @@ export function BlogPostPage({
             <BlogPostTableOfContents headings={post.headings} />
           </div>
         </aside>
-        <div className="max-w-2xl md:flex-1 md:shrink-0">
+        <div className="min-w-0 max-w-2xl md:flex-1">
           <Button
             href="/blog"
             variant="secondary"
@@ -95,8 +96,8 @@ export function BlogPostPage({
                 />
               </motion.div>
               <motion.div
-                className="flex w-full items-center space-x-4 text-sm font-medium text-zinc-600/80 dark:text-zinc-400/80"
-                initial={{ opacity: 0, y: 10 }}
+                className="flex w-full flex-wrap items-center gap-x-4 gap-y-2 text-sm font-medium text-zinc-600/80 dark:text-zinc-400/80"
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.15,
@@ -106,16 +107,19 @@ export function BlogPostPage({
                   delay: 0.1,
                 }}
               >
+                <Link
+                  href="/about"
+                  rel="author"
+                  className="shrink-0 hover:text-lime-700 dark:hover:text-lime-400"
+                >
+                  十里（5km）
+                </Link>
                 <time
                   dateTime={post.publishedAt}
                   className="flex items-center space-x-1.5"
                 >
                   <CalendarIcon />
-                  <span>
-                    {parseDateTime({
-                      date: new Date(post.publishedAt),
-                    })?.format('YYYY/MM/DD')}
-                  </span>
+                  <span>{formatPostDate(post.publishedAt)}</span>
                 </time>
                 <span className="inline-flex items-center space-x-1.5">
                   <ScriptIcon />
@@ -124,7 +128,7 @@ export function BlogPostPage({
               </motion.div>
               <motion.h1
                 className="mt-6 w-full text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl"
-                initial={{ opacity: 0, y: 8 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.2,
@@ -138,7 +142,7 @@ export function BlogPostPage({
               </motion.h1>
               <motion.p
                 className="my-5 w-full text-sm font-medium text-zinc-500"
-                initial={{ opacity: 0, y: 8 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.2,
@@ -152,7 +156,7 @@ export function BlogPostPage({
               </motion.p>
               <motion.div
                 className="flex w-full items-center space-x-4 text-sm font-medium text-zinc-700/50 dark:text-zinc-300/50"
-                initial={{ opacity: 0, y: 5 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.15,

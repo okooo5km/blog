@@ -22,9 +22,8 @@ const parseOutline = (nodes: Node[]) => {
     .filter((node) => node._type === 'block' && node.style.startsWith('h'))
     .map((node) => {
       return {
-        style: node.style,
-        text:
-          node.children?.[0] !== undefined ? node.children[0].text ?? '' : '',
+        style: node.style === 'h1' ? 'h2' : node.style,
+        text: node.children?.map((child) => child.text ?? '').join('') ?? '',
         id: node._key,
       }
     })

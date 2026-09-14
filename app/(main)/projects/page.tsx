@@ -8,9 +8,11 @@ const title = '我的项目&产品'
 const description =
   '个人做了各种各样的不知名小项目和产品，这里是我筛选出来了的一些，后面会持续更新。'
 export const metadata = {
+  alternates: { canonical: '/projects' },
   title,
   description,
   openGraph: {
+    url: '/projects',
     title,
     description,
   },

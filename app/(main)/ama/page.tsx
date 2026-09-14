@@ -13,9 +13,11 @@ const description =
   '5km 提供一对一的咨询服务（Ask Me Anything）。我有桌面应用开发、UI/UX 设计、嵌入式软硬件开发、Web全栈开发、独立创造、内容创作等经验，可以为你解答相关的问题。'
 
 export const metadata = {
+  alternates: { canonical: '/ama' },
   title,
   description,
   openGraph: {
+    url: '/ama',
     title,
     description,
   },

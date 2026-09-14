@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { BlogPostPage } from '~/app/(main)/blog/BlogPostPage'
 import { kvKeys } from '~/config/kv'
 import { getPostStatistics } from '~/lib/post-statistics'
+import { seo } from '~/lib/seo'
 import { getBlogPost } from '~/sanity/queries'
 
 export const generateMetadata = async (props: {
@@ -18,6 +19,7 @@ export const generateMetadata = async (props: {
   const { title, description, mainImage } = post
 
   return {
+    alternates: { canonical: `/blog/${encodeURIComponent(post.slug)}` },
     title,
     description,
     openGraph: {
@@ -29,6 +31,10 @@ export const generateMetadata = async (props: {
         },
       ],
       type: 'article',
+      url: `/blog/${encodeURIComponent(post.slug)}`,
+      publishedTime: post.publishedAt,
+      modifiedTime: post._updatedAt,
+      authors: [new URL('/about', seo.url).href],
     },
     twitter: {
       images: [
@@ -75,12 +81,39 @@ export default async function BlogPage(props: {
   )
 
   return (
-    <BlogPostPage
-      post={post}
-      views={views}
-      relatedViews={relatedViews}
-      reactions={reactions}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: post.title,
+            description: post.description,
+            image: post.mainImage?.asset?.url,
+            datePublished: post.publishedAt,
+            dateModified: post._updatedAt ?? post.publishedAt,
+            mainEntityOfPage: new URL(
+              `/blog/${encodeURIComponent(post.slug)}`,
+              seo.url
+            ).href,
+            author: {
+              '@type': 'Person',
+              name: '十里（5km）',
+              '@id': new URL('/about#person', seo.url).href,
+              url: new URL('/about', seo.url).href,
+            },
+            inLanguage: 'zh-CN',
+          }).replace(/</g, '\\u003c'),
+        }}
+      />
+      <BlogPostPage
+        post={post}
+        views={views}
+        relatedViews={relatedViews}
+        reactions={reactions}
+      />
+    </>
   )
 }
 

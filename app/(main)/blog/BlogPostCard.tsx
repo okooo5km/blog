@@ -1,4 +1,3 @@
-import { parseDateTime } from '@zolplay/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -8,6 +7,7 @@ import {
   HourglassIcon,
   ScriptIcon,
 } from '~/assets'
+import { formatPostDate } from '~/lib/date'
 import { prettifyNumber } from '~/lib/math'
 import { type Post } from '~/sanity/schemas/post'
 
@@ -23,7 +23,9 @@ export function BlogPostCard({ post, views }: { post: Post; views: number }) {
         {
           '--post-image-fg': mainImage.asset.dominant?.foreground,
           '--post-image-bg': mainImage.asset.dominant?.background,
-          '--post-image': mainImage.asset.lqip ? `url(${mainImage.asset.lqip})` : 'none',
+          '--post-image': mainImage.asset.lqip
+            ? `url(${mainImage.asset.lqip})`
+            : 'none',
         } as React.CSSProperties
       }
     >
@@ -47,11 +49,7 @@ export function BlogPostCard({ post, views }: { post: Post; views: number }) {
           <span className="inline-flex items-center space-x-3">
             <span className="inline-flex items-center space-x-1 text-[12px] font-medium text-[--post-image-fg] md:text-sm">
               <CalendarIcon />
-              <span>
-                {parseDateTime({ date: new Date(publishedAt) })?.format(
-                  'YYYY/MM/DD'
-                )}
-              </span>
+              <span>{formatPostDate(publishedAt)}</span>
             </span>
 
             {Array.isArray(categories) && (

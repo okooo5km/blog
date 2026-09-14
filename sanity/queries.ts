@@ -22,6 +22,26 @@ export const getAllLatestBlogPostSlugs = () => {
   )
 }
 
+export const getPublicPostIndex = () =>
+  client.fetch<{ title: string; slug: string; description: string }[]>(
+    groq`*[_type == "post" && !(_id in path("drafts.**"))
+      && publishedAt <= now() && defined(slug.current)] | order(publishedAt desc) {
+      title, "slug": slug.current, description
+    }`,
+    {},
+    { next: { revalidate: 300 } }
+  )
+
+export const getSitemapPosts = () =>
+  client.fetch<{ slug: string; updatedAt: string }[]>(
+    groq`*[_type == "post" && !(_id in path("drafts.**"))
+      && publishedAt <= now() && defined(slug.current)] {
+      "slug": slug.current, "updatedAt": _updatedAt
+    }`,
+    {},
+    { next: { revalidate: 300 } }
+  )
+
 type GetBlogPostsOptions = {
   limit?: number
   offset?: number
@@ -112,13 +132,14 @@ export const getLatestBlogPostsWithBody = (options: GetBlogPostsOptions) =>
   )
 
 export const getBlogPostQuery = groq`
-  *[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
+  *[_type == "post" && slug.current == $slug && publishedAt <= now() && !(_id in path("drafts.**"))][0] {
     _id,
     title,
     "slug": slug.current,
     "categories": categories[]->title,
     description,
     publishedAt,
+    _updatedAt,
     readingTime,
     mood,
     body[] {
@@ -138,7 +159,7 @@ export const getBlogPostQuery = groq`
         "lqip": metadata.lqip
       }
     },
-    "related": *[_type == "post" && slug.current != $slug && count(categories[@._ref in ^.^.categories[]._ref]) > 0] | order(publishedAt desc, _createdAt desc) [0..2] {
+    "related": *[_type == "post" && slug.current != $slug && !(_id in path("drafts.**")) && publishedAt <= now() && defined(slug.current) && count(categories[@._ref in ^.^.categories[]._ref]) > 0] | order(publishedAt desc, _createdAt desc) [0..2] {
       _id,
       title,
       "slug": slug.current,

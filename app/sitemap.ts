@@ -1,36 +1,21 @@
 import { type MetadataRoute } from 'next'
 
-import { url } from '~/lib'
-import { getAllLatestBlogPostSlugs } from '~/sanity/queries'
+import { seo } from '~/lib/seo'
+import { getSitemapPosts } from '~/sanity/queries'
 
-export default async function sitemap() {
-  const staticMap = [
-    {
-      url: url('/').href,
-      lastModified: new Date(),
-    },
-    {
-      url: url('/blog').href,
-      lastModified: new Date(),
-    },
-    {
-      url: url('/projects').href,
-      lastModified: new Date(),
-    },
-    {
-      url: url('/guestbook').href,
-      lastModified: new Date(),
-    },
-  ] satisfies MetadataRoute.Sitemap
-
-  const slugs = await getAllLatestBlogPostSlugs()
-
-  const dynamicMap = slugs.map((slug) => ({
-    url: url(`/blog/${slug}`).href,
-    lastModified: new Date(),
-  })) satisfies MetadataRoute.Sitemap
-
-  return [...staticMap, ...dynamicMap]
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getSitemapPosts()
+  return [
+    ...['/', '/blog', '/projects', '/guestbook', '/ama', '/about'].map(
+      (path) => ({
+        url: new URL(path, seo.url).href,
+      })
+    ),
+    ...posts.map(({ slug, updatedAt }) => ({
+      url: new URL(`/blog/${encodeURIComponent(slug)}`, seo.url).href,
+      lastModified: updatedAt,
+    })),
+  ]
 }
 
 export const revalidate = 60
