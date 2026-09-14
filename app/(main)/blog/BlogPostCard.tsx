@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 
 import {
   CalendarIcon,
@@ -7,6 +6,7 @@ import {
   HourglassIcon,
   ScriptIcon,
 } from '~/assets'
+import { NavigationLink as Link } from '~/components/links/NavigationLink'
 import { formatPostDate } from '~/lib/date'
 import { prettifyNumber } from '~/lib/math'
 import { type Post } from '~/sanity/schemas/post'
@@ -17,7 +17,6 @@ export function BlogPostCard({ post, views }: { post: Post; views: number }) {
   return (
     <Link
       href={`/blog/${slug}`}
-      prefetch={false}
       className="group relative flex w-full transform-gpu flex-col rounded-3xl bg-transparent ring-2 ring-[--post-image-bg] transition-transform hover:-translate-y-0.5"
       style={
         {

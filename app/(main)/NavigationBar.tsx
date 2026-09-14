@@ -3,10 +3,10 @@
 import { Popover, type PopoverProps, Transition } from '@headlessui/react'
 import { clsxm } from '@zolplay/utils'
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
+import { NavigationLink as Link } from '~/components/links/NavigationLink'
 import { navigationItems } from '~/config/nav'
 
 function NavItem({
