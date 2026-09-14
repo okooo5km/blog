@@ -28,6 +28,12 @@ const nextConfig = {
 
   redirects() {
     return [
+      // Redirect before loading boundaries stream a 200 response.
+      {
+        source: '/blog/page/1',
+        destination: '/blog',
+        permanent: true,
+      },
       {
         source: '/twitter',
         destination: 'https://twitter.com/okooo5km',
