@@ -38,5 +38,5 @@
     { "pattern": "5km.studio", "custom_domain": true, "zone_id": "40c077eff02319f37a8389866858d115" },
   ],
   "observability": { "enabled": true },
-  "workers_dev": true,
+  "workers_dev": false,
 }
