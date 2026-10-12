@@ -1,5 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-import { type NextRequest, NextResponse } from 'next/server'
+import {
+  type NextFetchEvent,
+  type NextRequest,
+  NextResponse,
+} from 'next/server'
 
 import { getIP } from '~/lib/ip'
 
@@ -25,7 +29,46 @@ const isPublicRoute = createRouteMatcher([
   '/sign-up(.*)',
 ])
 
-export default clerkMiddleware(async (auth, req: NextRequest) => {
+const isContentRoute = createRouteMatcher([
+  '/',
+  '/blog(.*)',
+  '/projects',
+  '/guestbook',
+  '/newsletters(.*)',
+  '/about',
+  '/rss',
+  '/feed',
+  '/ama',
+])
+
+const clerkCookieNames = ['__session', '__client_uat', '__clerk_db_jwt']
+
+// 没有任何 Clerk 状态的公开内容请求（搜索/AI 爬虫、首次访问）不需要鉴权。
+// Clerk 开发实例会把这类文档请求 307 到 *.clerk.accounts.dev 握手，
+// 该响应带 X-Robots-Tag: noindex, nofollow，会让 Google 把整站判为 noindex。
+function canSkipClerk(req: NextRequest) {
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    return false
+  }
+  if (!isContentRoute(req)) {
+    return false
+  }
+  for (const key of req.nextUrl.searchParams.keys()) {
+    if (key.startsWith('__clerk')) {
+      return false
+    }
+  }
+
+  return !req.cookies
+    .getAll()
+    .some(({ name }) =>
+      clerkCookieNames.some(
+        (prefix) => name === prefix || name.startsWith(`${prefix}_`)
+      )
+    )
+}
+
+const handleWithClerk = clerkMiddleware(async (auth, req: NextRequest) => {
   const { nextUrl } = req
 
   const blockedIPs: Array<string> = []
@@ -53,3 +96,11 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
     await auth.protect()
   }
 })
+
+export default function middleware(req: NextRequest, event: NextFetchEvent) {
+  if (canSkipClerk(req)) {
+    return NextResponse.next()
+  }
+
+  return handleWithClerk(req, event)
+}
